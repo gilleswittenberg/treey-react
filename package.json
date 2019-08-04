@@ -2,6 +2,7 @@
   "name": "treey-react",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://gilleswittenberg.github.io/treey-react/",
   "dependencies": {
     "@types/jest": "24.0.16",
     "@types/node": "12.6.9",
