@@ -1,0 +1,25 @@
+@import "colors"
+
+.Item
+  $b: 4px
+  .ItemBody
+    height: 32px
+    margin-bottom: $b
+    background-color: $lightGray
+    > span
+      $p: 4px
+      display: inline-block
+      width: 520px - 32px * 2 - $p * 2
+      text-align: left
+      padding: $p
+    button
+      background-color: transparent
+  form
+    margin-bottom: $b
+    input
+      width: 520px - 32px - $b
+      margin-right: $b
+      height: 32px
+      box-sizing: border-box
+      border: solid 1px $lightGray
+      padding-left: $b

@@ -25,7 +25,9 @@ const App: React.FC = () => {
       { hasTree &&
         <>
           <h1 className="RootItem">{ name } </h1>
-          <Items parentId={ id } items={ items } treey={ treey } />
+          <div className="ItemsWrap">
+            <Items parentId={ id } items={ items } treey={ treey } />
+          </div>
         </>
       }
       </main>

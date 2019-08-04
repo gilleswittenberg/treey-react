@@ -1,8 +1,11 @@
 import React, { useState, FormEvent } from "react"
 import TreeItem from "../treey/src/types/TreeItem"
 import { Id, Index } from "../treey/src/types/types"
-import Items from "./Items"
 import { Treey } from "../hooks/useTreey"
+import Items from "./Items"
+import Button from "./Button"
+
+import "../styles/Item.sass"
 
 interface Props {
   parentId: Id,
@@ -18,8 +21,7 @@ const Item: React.FC<Props> = ({ parentId, index, item, treey }) => {
   const [isEditing, setIsEditing] = useState(false)
   const [value, setValue] = useState(data)
 
-  const showData = !isEditing
-  const showButton = showData
+  const showItem = !isEditing
   const showForm = isEditing
   const onClickEdit = () => setIsEditing(true)
   const onClickDelete = async () => {
@@ -43,17 +45,17 @@ const Item: React.FC<Props> = ({ parentId, index, item, treey }) => {
 
   return (
     <div className="Item">
-      { showData && data }
-      { showButton &&
-        <>
-        <button onClick={ onClickEdit }>Edit</button>
-        <button onClick={ onClickDelete }>Delete</button>
-        </>
+      { showItem &&
+        <div className="ItemBody">
+          <span>{ data }</span>
+          <Button type="EDIT" onClick={ onClickEdit } />
+          <Button type="DELETE" onClick={ onClickDelete } />
+        </div>
       }
       { showForm &&
         <form onSubmit={ onSubmit }>
           <input type="text" onChange={ onChange } value={ value } />
-          <button type="submit">Edit</button>
+          <Button type="EDIT" />
         </form>
       }
       { id &&

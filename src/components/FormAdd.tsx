@@ -1,6 +1,9 @@
 import React, { useState, FormEvent } from "react"
 import { Id } from "../treey/src/types/types"
 import { Treey } from "../hooks/useTreey"
+import Button from "./Button"
+
+import "../styles/FormAdd.sass"
 
 interface Props {
   parentId: Id,
@@ -29,12 +32,12 @@ const FormAdd: React.FC<Props> = ({ parentId, treey }) => {
   return (
     <div className="FormAdd">
       { showButton &&
-        <button onClick={ onClick }>Add</button>
+        <Button onClick={ onClick } type="ADD" />
       }
       { showForm &&
         <form onSubmit={ onSubmit }>
           <input type="text" onChange={ onChange } value={ value } />
-          <button type="submit">Add</button>
+          <Button type="ADD" />
         </form>
       }
     </div>
