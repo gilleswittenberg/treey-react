@@ -1,6 +1,7 @@
 import React, { useState, FormEvent } from 'react'
 import TreeItem from "../treey/src/types/TreeItem"
 import { Id, Index } from "../treey/src/types/types"
+import Items from "./Items"
 
 interface Props {
   parentId: Id,
@@ -35,6 +36,8 @@ const Item: React.FC<Props> = ({ parentId, index, item, treey }) => {
     setValue(value)
   }
 
+  const id = item.state.ids && item.state.ids[0]
+
   return (
     <div className="Item">
       { showData && data }
@@ -49,6 +52,9 @@ const Item: React.FC<Props> = ({ parentId, index, item, treey }) => {
           <input type="text" onChange={ onChange } value={ value } />
           <button type="submit">Edit</button>
         </form>
+      }
+      { id &&
+        <Items parentId={ id } items={ item.relations } treey={ treey } />
       }
     </div>
   )

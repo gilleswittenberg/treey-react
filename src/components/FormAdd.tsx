@@ -3,11 +3,10 @@ import { Id } from "../treey/src/types/types"
 
 interface Props {
   parentId: Id,
-  tree: any,
   treey: any
 }
 
-const FormAdd: React.FC<Props> = ({ parentId, tree, treey }) => {
+const FormAdd: React.FC<Props> = ({ parentId, treey }) => {
 
   const [isAdding, setIsAdding] = useState(false)
   const [value, setValue] = useState("")
