@@ -54,7 +54,7 @@ const Item: React.FC<Props> = ({ parentId, index, item, treey }) => {
       }
       { showForm &&
         <form onSubmit={ onSubmit }>
-          <input type="text" onChange={ onChange } value={ value } />
+          <input type="text" onChange={ onChange } value={ value } autoFocus />
           <Button type="EDIT" />
         </form>
       }
