@@ -1,4 +1,5 @@
 @import colors
+@import resolutions
 
 .App
   text-align: center
@@ -12,5 +13,8 @@
     font-weight: 100
 
 .ItemsWrap
-  max-width: 520px
-  margin: 0 auto
+  @include small
+    padding: 4px
+  @include large
+    margin: 0 auto
+    max-width: 520px

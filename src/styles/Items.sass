@@ -1,2 +1,7 @@
-.Items
-  transform: translateX(12px)
+@import resolutions
+
+.Items .Items
+  @include small
+    margin-left: 8px
+  @include large
+    transform: translateX(12px)

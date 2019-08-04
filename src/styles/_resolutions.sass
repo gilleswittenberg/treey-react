@@ -1,0 +1,9 @@
+$screenSmallMax: 768px
+
+@mixin small
+  @media (max-width: $screenSmallMax)
+    @content
+
+@mixin large
+  @media (min-width: $screenSmallMax + 1)
+    @content
