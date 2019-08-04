@@ -7,7 +7,7 @@ import Button from "./Button"
 import "../styles/FormAdd.sass"
 
 interface Props {
-  parentId: Id,
+  parentId: Id
   treey: Treey
 }
 
@@ -23,6 +23,7 @@ const FormAdd: React.FC<Props> = ({ parentId, treey }) => {
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault()
     await treey.createAndAdd(value, parentId)
+    setIsAdding(false)
     setValue("")
   }
   const onChange = (event: FormEvent) => {

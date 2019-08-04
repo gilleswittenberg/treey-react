@@ -9,9 +9,9 @@ import Button from "./Button"
 import "../styles/Item.sass"
 
 interface Props {
-  parentId: Id,
-  index: Index,
-  item: TreeItem,
+  parentId: Id
+  index: Index
+  item: TreeItem
   treey: Treey
 }
 

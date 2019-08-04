@@ -5,9 +5,11 @@ import Item from "./Item"
 import FormAdd from "./FormAdd"
 import { Treey } from "../hooks/useTreey"
 
+import "../styles/Items.sass"
+
 interface Props {
-  parentId: Id,
-  items: TreeItems,
+  parentId: Id
+  items: TreeItems
   treey: Treey
 }
 
