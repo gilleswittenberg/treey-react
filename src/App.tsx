@@ -1,5 +1,6 @@
 import React from "react"
 import useTreey from "./hooks/useTreey"
+import Header from "./components/Header"
 import Items from "./components/Items"
 
 import "./styles/App.sass"
@@ -16,17 +17,14 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>木</h1>
-        <h2>treey</h2>
-      </header>
+      <Header />
       <main>
       { isLoading &&
         <p>is loading&hellip;</p>
       }
       { hasTree &&
         <>
-          <h1>{ name } </h1>
+          <h1 className="RootItem">{ name } </h1>
           <Items parentId={ id } items={ items } treey={ treey } />
         </>
       }
