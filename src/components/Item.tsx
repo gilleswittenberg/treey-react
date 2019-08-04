@@ -18,12 +18,17 @@ interface Props {
 const Item: React.FC<Props> = ({ parentId, index, item, treey }) => {
 
   const data = item.state && item.state.data
+  const id = item.state.ids && item.state.ids[0]
 
   const [isEditing, setIsEditing] = useState(false)
   const [value, setValue] = useState(data)
+  const [isOpened, setIsOpened] = useState(false)
 
   const showItem = !isEditing
   const showForm = isEditing
+  const showItems = id && isOpened
+
+  const onClick= () => setIsOpened(!isOpened)
   const onClickEdit = () => setIsEditing(true)
   const onClickDelete = async () => {
     const id = item.state.ids && item.state.ids[0]
@@ -42,15 +47,13 @@ const Item: React.FC<Props> = ({ parentId, index, item, treey }) => {
     setValue(value)
   }
 
-  const id = item.state.ids && item.state.ids[0]
-
   useEscListener(() => setIsEditing(false))
 
   return (
     <div className="Item">
       { showItem &&
         <div className="ItemBody">
-          <span>{ data }</span>
+          <span onClick={ onClick }>{ data }</span>
           <Button type="EDIT" onClick={ onClickEdit } />
           <Button type="DELETE" onClick={ onClickDelete } />
         </div>
@@ -61,7 +64,7 @@ const Item: React.FC<Props> = ({ parentId, index, item, treey }) => {
           <Button type="EDIT" />
         </form>
       }
-      { id &&
+      { id && showItems &&
         <Items parentId={ id } items={ item.relations } treey={ treey } />
       }
     </div>
