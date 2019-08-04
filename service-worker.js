@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/treey-react/precache-manifest.1095e29a0d0193d8ad91ecf5ccf79c3d.js"
+  "/treey-react/precache-manifest.3a6d66b3f7806dac4dda8ed798e17461.js"
 );
 
 self.addEventListener('message', (event) => {
