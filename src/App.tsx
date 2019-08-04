@@ -1,8 +1,8 @@
-import React from 'react'
+import React from "react"
 import useTreey from "./hooks/useTreey"
 import Items from "./components/Items"
 
-import './App.css'
+import "./styles/App.sass"
 
 const App: React.FC = () => {
 
