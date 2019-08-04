@@ -1,6 +1,7 @@
 import React, { useState, FormEvent } from "react"
 import { Id } from "../treey/src/types/types"
 import { Treey } from "../hooks/useTreey"
+import useEscListener from "../hooks/useEscListener"
 import Button from "./Button"
 
 import "../styles/FormAdd.sass"
@@ -28,6 +29,8 @@ const FormAdd: React.FC<Props> = ({ parentId, treey }) => {
     const value = (event.target as HTMLInputElement).value
     setValue(value)
   }
+
+  useEscListener(() => setIsAdding(false))
 
   return (
     <div className="FormAdd">

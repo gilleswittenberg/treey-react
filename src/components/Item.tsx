@@ -2,6 +2,7 @@ import React, { useState, FormEvent } from "react"
 import TreeItem from "../treey/src/types/TreeItem"
 import { Id, Index } from "../treey/src/types/types"
 import { Treey } from "../hooks/useTreey"
+import useEscListener from "../hooks/useEscListener"
 import Items from "./Items"
 import Button from "./Button"
 
@@ -42,6 +43,8 @@ const Item: React.FC<Props> = ({ parentId, index, item, treey }) => {
   }
 
   const id = item.state.ids && item.state.ids[0]
+
+  useEscListener(() => setIsEditing(false))
 
   return (
     <div className="Item">
