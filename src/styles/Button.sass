@@ -1,11 +1,14 @@
+@import global
+
 .Button
-  width: 32px
-  height: 32px
+  width: $dim
+  height: $dim
   padding: 0
   text-indent: -9999px
-  background-size: 32px
+  background-size: $dim
   background-repeat: no-repeat
-  background-position: center 
+  background-position: center
+  background-color: transparent
   &.ADD
     background-image: url("/images/add_64x64.png")
   &.EDIT

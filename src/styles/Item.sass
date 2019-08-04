@@ -1,25 +1,38 @@
-@import "colors"
+@import colors
+@import global
 
 .Item
-  $b: 4px
+
+  $paddingLeft: $spacing * 4
+
   .ItemBody
-    height: 32px
-    margin-bottom: $b
+    height: $height
+    margin-bottom: $bottomSpacing
     background-color: $lightGray
+    transition: background-color .2s
+    cursor: pointer
+    &:hover
+      background-color: lighten($lightGray, 2%)
+
     > span
-      $p: 4px
       display: inline-block
-      width: 520px - 32px * 2 - $p * 2
+      width: $width - $dim * 2 - $spacing * 2 - $paddingLeft
       text-align: left
-      padding: $p
+      padding-left: $paddingLeft
     button
-      background-color: transparent
+      visibility: hidden
+      margin-top: $spacing
+      margin-right: $spacing
+    &:hover
+      button
+        visibility: visible
+
   form
-    margin-bottom: $b
+    margin-bottom: $spacing
     input
-      width: 520px - 32px - $b
-      margin-right: $b
-      height: 32px
+      width: $width - $dim - $spacing
+      margin-right: $spacing
+      height: $height
       box-sizing: border-box
       border: solid 1px $lightGray
-      padding-left: $b
+      padding-left: $paddingLeft

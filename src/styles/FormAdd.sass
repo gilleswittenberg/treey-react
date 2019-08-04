@@ -1,22 +1,25 @@
-@import "colors"
+@import colors
+@import global
 
 .FormAdd
 
-  $b: 4px
-
-  margin-bottom: $b
+  margin-bottom: $bottomSpacing
 
   > button.ADD
     width: 100%
+    height: $height
     background-color: $lightGray
+    transition: background-color .2s
+    &:hover
+      background-color: lighten($lightGray, 2%)
 
   button
     background-color: transparent
 
   input
-    width: 520px - 32px - $b
-    margin-right: $b
-    height: 32px
+    width: $width - $dim - $spacing
+    margin-right: $spacing
+    height: $height
     box-sizing: border-box
     border: solid 1px $lightGray
-    padding-left: $b
+    padding-left: $spacing * 4
