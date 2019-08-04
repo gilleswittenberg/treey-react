@@ -2,12 +2,13 @@ import React, { useState, FormEvent } from 'react'
 import TreeItem from "../treey/src/types/TreeItem"
 import { Id, Index } from "../treey/src/types/types"
 import Items from "./Items"
+import { Treey } from "../hooks/useTreey"
 
 interface Props {
   parentId: Id,
   index: Index,
   item: TreeItem,
-  treey: any
+  treey: Treey
 }
 
 const Item: React.FC<Props> = ({ parentId, index, item, treey }) => {
@@ -23,11 +24,13 @@ const Item: React.FC<Props> = ({ parentId, index, item, treey }) => {
   const onClickEdit = () => setIsEditing(true)
   const onClickDelete = async () => {
     const id = item.state.ids && item.state.ids[0]
+    if (id == null) return
     await treey.remove(id, parentId, index)
   }
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault()
     const id = item.state.ids && item.state.ids[0]
+    if (id == null) return
     await treey.update(id, value)
     setIsEditing(false)
   }

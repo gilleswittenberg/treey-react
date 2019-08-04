@@ -1,5 +1,13 @@
-import { init, createAndAdd, update, remove, move } from "../treey/src/treey"
 import { useState, useEffect } from "react"
+import { Data, Id, Index } from "../treey/src/types/types"
+import { init, createAndAdd, update, remove, move } from "../treey/src/treey"
+
+export interface Treey {
+  createAndAdd (data: Data, parentId: Id) : void
+  update (id: Id, data: Data) : void
+  remove (id: Id, parentId: Id, index: Index) : void
+  move (id: Id, oldParentId: Id, oldIndex: Index, parentId: Id, index: Index) : void
+}
 
 const useTreey = () => {
   const [tree, setTree] = useState()
@@ -9,20 +17,20 @@ const useTreey = () => {
       setTree(tree)
     })()
   }, [])
-  const actions = {
-    createAndAdd: async (data: any, parentId: any) => {
+  const actions: Treey = {
+    createAndAdd: async (data: Data, parentId: Id) => {
       const tree = await createAndAdd(data, parentId)
       setTree(tree)
     },
-    update: async (id: any, data: any) => {
+    update: async (id: Id, data: Data) => {
       const tree = await update(id, data)
       setTree(tree)
     },
-    remove: async (id: any, parentId: any, index: any) => {
+    remove: async (id: Id, parentId: Id, index: Index) => {
       const tree = await remove(parentId, id, index)
       setTree(tree)
     },
-    move: async (id: any, oldParentId: any, oldIndex: any, parentId: any, index: any) => {
+    move: async (id: Id, oldParentId: Id, oldIndex: Index, parentId: Id, index: Index) => {
       const tree = await move(id, oldParentId, oldIndex, parentId, index)
       setTree(tree)
     }

@@ -1,9 +1,10 @@
 import React, { useState, FormEvent } from 'react'
 import { Id } from "../treey/src/types/types"
+import { Treey } from "../hooks/useTreey"
 
 interface Props {
   parentId: Id,
-  treey: any
+  treey: Treey
 }
 
 const FormAdd: React.FC<Props> = ({ parentId, treey }) => {
