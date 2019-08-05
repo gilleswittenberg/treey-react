@@ -5,21 +5,29 @@
 
   margin-bottom: $bottomSpacing
 
+  button
+    background-color: $lightGray
+    border-radius: $borderRadius
+    width: $height
+    height: $height
+    margin-left: $bottomSpacing
+    vertical-align: top
+
   > button.ADD
     width: 100%
     height: $height
+    margin-left: 0
     background-color: $lightGray
+    border-radius: $borderRadius
     transition: background-color .2s
     &:hover
       background-color: lighten($lightGray, 2%)
 
-  button
-    background-color: transparent
-
   input
-    width: calc(100% - #{ $dim + $spacing })
+    width: calc(100% - #{ $height + $spacing + $bottomSpacing })
     margin-right: $spacing
     height: $height
     box-sizing: border-box
     border: solid 1px $lightGray
+    border-radius: $borderRadius
     padding-left: $spacing * 4

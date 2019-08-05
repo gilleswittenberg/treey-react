@@ -3,37 +3,62 @@
 
 .Item
 
-  $paddingLeft: $spacing * 4
+  $paddingLeft: $spacing * 8
 
   .ItemBody
     height: $height
     margin-bottom: $bottomSpacing
-    background-color: $lightGray
-    transition: background-color .2s
     cursor: pointer
-    &:hover
-      background-color: lighten($lightGray, 2%)
+    background-color: $lightGray
+    border-radius: $borderRadius
 
     > span
       display: inline-block
-      width: calc(100% - #{ $dim * 2 + $spacing * 2 + $paddingLeft })
+      width: calc(100% - #{ $height * 2 + $bottomSpacing * 2 + $paddingLeft })
+      height: $height
+      line-height: $height
+      vertical-align: top
       text-align: left
       padding-left: $paddingLeft
+      border-radius: $borderRadius
+      background-color: $lightGray
+      transition: background-color .2s
+      &:hover
+        background-color: lighten($lightGray, 2%)
 
     button
+      vertical-align: top
       visibility: hidden
-      margin-top: $spacing
-      margin-right: $spacing
+      width: $height
+      height: $height
+      background-color: $lightGray
+      border-radius: $borderRadius
+      margin-left: $bottomSpacing
+      transition: background-color .2s
+      &:hover
+        background-color: lighten($lightGray, 2%)
+
     &:hover
+      background-color: transparent
       button
         visibility: visible
 
   form
     margin-bottom: $bottomSpacing
     input
-      width: calc(100% - #{ $dim + $spacing })
+      width: calc(100% - #{ $height + $spacing + $bottomSpacing })
       margin-right: $spacing
       height: $height
       box-sizing: border-box
       border: solid 1px $lightGray
+      border-radius: $borderRadius
       padding-left: $paddingLeft
+    button
+      background-color: $lightGray
+      border-radius: $borderRadius
+      margin-left: $bottomSpacing
+      transition: background-color .2s
+      width: $height
+      height: $height
+      &:hover
+        background-color: lighten($lightGray, 2%)
