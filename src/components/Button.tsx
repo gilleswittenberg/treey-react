@@ -2,19 +2,24 @@ import React from "react"
 
 import "../styles/Button.sass"
 
+type ButtonType = "ADD" | "EDIT" | "DELETE"
+
 interface Props {
-  type: "ADD" | "EDIT" | "DELETE"
+  type: ButtonType
   onClick?: () => void
+}
+
+const typeToImageMap = (type: ButtonType) : string => {
+  switch (type) {
+  case "ADD": return "add_64x64.png"
+  case "EDIT": return "submit_64x64.png"
+  case "DELETE": return "remove_64x64.png"
+  }
 }
 
 const Button: React.FC<Props> = ({ type, onClick }) => {
   const className = "Button " + type
-  const publicUrl = process.env.PUBLIC_URL
-  const backgroundImage =
-    type === "ADD" ? `url("${ publicUrl }/images/add_64x64.png")` :
-    type === "EDIT" ? `url("${ publicUrl }/images/submit_64x64.png")` :
-    type === "DELETE" ? `url("${ publicUrl }/images/remove_64x64.png")` :
-    ""
+  const backgroundImage = `url("${ process.env.PUBLIC_URL }/images/${ typeToImageMap(type) }")`
   const style = { backgroundImage }
   return (
     <button className={ className } style={ style } onClick={ onClick } title={ type }>{ type }</button>
