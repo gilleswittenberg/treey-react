@@ -26,15 +26,20 @@
       &:hover
         background-color: lighten($lightGray, 2%)
 
+      button
+        background-color: transparent
+        float: right
+
     button
       vertical-align: top
       visibility: hidden
+      opacity: 0
       width: $height
       height: $height
       background-color: $lightGray
       border-radius: $borderRadius
       margin-left: $bottomSpacing
-      transition: background-color .2s
+      transition: background-color, opacity .2s, .2s
       &:hover
         background-color: lighten($lightGray, 2%)
 
@@ -42,6 +47,8 @@
       background-color: transparent
       button
         visibility: visible
+        opacity: 1
+        transition: background-color .2s
 
   form
     margin-bottom: $bottomSpacing

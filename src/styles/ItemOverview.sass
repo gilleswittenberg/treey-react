@@ -1,0 +1,23 @@
+@import colors
+@import global
+@import resolutions
+
+.ItemOverview
+  text-align: left
+  max-width: $width
+  margin: 0 auto
+
+  @include small
+    padding: 0 $bottomSpacing
+
+  h1, h2, p, li
+    margin-bottom: 12px
+
+  li
+    padding-bottom: 12px
+    border-bottom: solid 1px $green
+    line-height: 1.6em
+
+  .small
+    color: lighten($gray, 30%)
+    font-size: 10px

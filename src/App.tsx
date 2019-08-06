@@ -1,7 +1,9 @@
 import React from "react"
 import useTreey from "./hooks/useTreey"
+import useRoutes from "./hooks/useRoutes"
 import Header from "./components/Header"
-import Items from "./components/Items"
+import Tree from "./components/Tree"
+import ItemOverview from "./components/ItemOverview"
 
 import "./styles/App.sass"
 
@@ -9,11 +11,17 @@ const App: React.FC = () => {
 
   const [tree, treey] = useTreey()
   const isLoading = tree === undefined
-  const hasTree = !isLoading
+  const showPage = !isLoading
 
   const name = tree && tree.id
-  const items = tree && tree.relations
-  const id = tree && tree.state.ids && tree.state.ids[0]
+
+  const routes = ["/", "/item"]
+  const base = document.location.pathname.slice(0, 13) === "/treey-react" ? "/treey-react" : ""
+
+  const [route, switchRoute] = useRoutes(routes, base)
+  const showHome = route.isHome()
+  const showItemOverview = route.isPage("/item")
+  const show404 = route.is404()
 
   return (
     <div className="App">
@@ -22,12 +30,13 @@ const App: React.FC = () => {
       { isLoading &&
         <p>is loading&hellip;</p>
       }
-      { hasTree &&
+      { showPage &&
         <>
           <h1 className="RootItem"><span>your Root UUID: </span>{ name }</h1>
-          <div className="ItemsWrap">
-            <Items parentId={ id } items={ items } treey={ treey } />
-          </div>
+
+          { showHome && <Tree tree={ tree } treey={ treey } switchRoute={ switchRoute } /> }
+          { showItemOverview && <ItemOverview treey={ treey } /> }
+          { show404 && <p>404</p> }
         </>
       }
       </main>

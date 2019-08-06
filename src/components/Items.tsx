@@ -11,9 +11,10 @@ interface Props {
   parentId: Id
   items: TreeItems
   treey: Treey
+  switchRoute: any
 }
 
-const Items: React.FC<Props> = ({ parentId, items, treey }) => {
+const Items: React.FC<Props> = ({ parentId, items, treey, switchRoute }) => {
 
   const showItems = items.length > 0
 
@@ -25,7 +26,7 @@ const Items: React.FC<Props> = ({ parentId, items, treey }) => {
               const name = item.state.ids && item.state.ids[0].name
               return (
                 <li key={ name }>
-                  <Item parentId={ parentId } index={ index } item={ item } treey={ treey } />
+                  <Item parentId={ parentId } index={ index } item={ item } treey={ treey } switchRoute={ switchRoute } />
                 </li>
               )
             })
@@ -33,7 +34,6 @@ const Items: React.FC<Props> = ({ parentId, items, treey }) => {
         </ul>
       }
       <FormAdd parentId={ parentId } treey={ treey }/>
-
     </div>
   )
 }

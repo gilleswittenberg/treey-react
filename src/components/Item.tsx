@@ -13,9 +13,10 @@ interface Props {
   index: Index
   item: TreeItem
   treey: Treey
+  switchRoute: any
 }
 
-const Item: React.FC<Props> = ({ parentId, index, item, treey }) => {
+const Item: React.FC<Props> = ({ parentId, index, item, treey, switchRoute }) => {
 
   const data = item.state && item.state.data
   const id = item.state.ids && item.state.ids[0]
@@ -28,7 +29,13 @@ const Item: React.FC<Props> = ({ parentId, index, item, treey }) => {
   const showForm = isEditing
   const showItems = id && isOpened
 
-  const onClick= () => setIsOpened(!isOpened)
+  const onClick = () => setIsOpened(!isOpened)
+  const onClickInfo = () => {
+    const id = item.state.ids && item.state.ids[0]
+    if (id == null) return
+    const path = `/item/self/${ id.name }`
+    switchRoute(path)
+  }
   const onClickEdit = () => setIsEditing(true)
   const onClickDelete = async () => {
     const id = item.state.ids && item.state.ids[0]
@@ -53,7 +60,10 @@ const Item: React.FC<Props> = ({ parentId, index, item, treey }) => {
     <div className="Item">
       { showItem &&
         <div className="ItemBody">
-          <span onClick={ onClick }>{ data }</span>
+          <span onClick={ onClick }>
+            { data }
+            <button onClick={ onClickInfo }>ⓘ</button>
+          </span>
           <Button type="EDIT" onClick={ onClickEdit } />
           <Button type="DELETE" onClick={ onClickDelete } />
         </div>
@@ -65,7 +75,7 @@ const Item: React.FC<Props> = ({ parentId, index, item, treey }) => {
         </form>
       }
       { id && showItems &&
-        <Items parentId={ id } items={ item.relations } treey={ treey } />
+        <Items parentId={ id } items={ item.relations } treey={ treey } switchRoute={ switchRoute } />
       }
     </div>
   )

@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react"
 import { Data, Id, Index } from "../treey/src/types/types"
-import { init, createAndAdd, update, remove, move } from "../treey/src/treey"
+import { init, read, createAndAdd, update, remove, move } from "../treey/src/treey"
+import TreeItem from "../treey/src/types/TreeItem"
 
 export interface Treey {
+  read: (id: Id) => Promise<TreeItem>
   createAndAdd (data: Data, parentId: Id) : void
   update (id: Id, data: Data) : void
   remove (id: Id, parentId: Id, index: Index) : void
@@ -18,6 +20,9 @@ const useTreey = () => {
     })()
   }, [])
   const actions: Treey = {
+    read: async (id: Id) => {
+      return await read(id)
+    },
     createAndAdd: async (data: Data, parentId: Id) => {
       const tree = await createAndAdd(data, parentId)
       setTree(tree)
