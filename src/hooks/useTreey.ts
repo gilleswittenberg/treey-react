@@ -4,7 +4,7 @@ import { init, read, createAndAdd, update, remove, move } from "../treey/src/tre
 import TreeItem from "../treey/src/types/TreeItem"
 
 export interface Treey {
-  read: (id: Id) => Promise<TreeItem>
+  read: (id: Id) => Promise<TreeItem | undefined>
   createAndAdd (data: Data, parentId: Id) : void
   update (id: Id, data: Data) : void
   remove (id: Id, parentId: Id, index: Index) : void

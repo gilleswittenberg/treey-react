@@ -23,9 +23,8 @@ const Items: React.FC<Props> = ({ parentId, items, treey, switchRoute }) => {
       { showItems &&
         <ul>
           { items.map((item: TreeItem, index: number) => {
-              const name = item.state.ids && item.state.ids[0].name
               return (
-                <li key={ name }>
+                <li key={ item.name }>
                   <Item parentId={ parentId } index={ index } item={ item } treey={ treey } switchRoute={ switchRoute } />
                 </li>
               )

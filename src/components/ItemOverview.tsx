@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from "react"
-import { Treey } from "../hooks/useTreey"
+import React, { useState, useContext, useEffect } from "react"
+import TreeyContext from "../contexts/TreeyContext"
 import TreeItem from "../treey/src/types/TreeItem"
 import { ItemEventType } from "../treey/src/types/Item"
 
 import "../styles/ItemOverview.sass"
 
-interface Props {
-  treey: Treey
-}
-
-const ItemOverview: React.FC<Props> = ({ treey }) => {
+const ItemOverview: React.FC = () => {
 
   const pathElements = document.location.pathname.split("/")
   const l = pathElements.length
@@ -18,9 +14,11 @@ const ItemOverview: React.FC<Props> = ({ treey }) => {
   const [treeyId] = useState({ protocol, name })
 
   const [item, setItem] = useState<TreeItem>()
+  const { treey } = useContext(TreeyContext)
 
   useEffect(() => {
     (async () => {
+      if (treey == null) return
       const item = await treey.read(treeyId)
       setItem(item)
     })()
@@ -28,7 +26,7 @@ const ItemOverview: React.FC<Props> = ({ treey }) => {
 
   const isLoading = item == null
   const showItem = item != null
-  const title = item && item.state.ids && item.state.ids[0].name
+  const itemName = item && item.name
   const state = item && JSON.stringify(item.state)
 
   return (
@@ -38,7 +36,7 @@ const ItemOverview: React.FC<Props> = ({ treey }) => {
       }
       { showItem &&
         <>
-          <h1>item UUID: { title }</h1>
+          <h1>{ itemName }</h1>
           <h2>state</h2>
           <p className="small">{ state }</p>
           <h2>events</h2>
