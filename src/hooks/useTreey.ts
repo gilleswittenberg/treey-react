@@ -32,7 +32,7 @@ const useTreey = () => {
       setTree(tree)
     },
     remove: async (id: Id, parentId: Id, index: Index) => {
-      const tree = await remove(parentId, id, index)
+      const tree = await remove(id, parentId, index)
       setTree(tree)
     },
     move: async (id: Id, oldParentId: Id, oldIndex: Index, parentId: Id, index: Index) => {

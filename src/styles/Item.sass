@@ -26,9 +26,15 @@
       &:hover
         background-color: lighten($lightGray, 2%)
 
-      button
-        background-color: transparent
+      a
+        visibility: hidden
+        display: inline-block
+        width: $height
+        height: $height
         float: right
+        text-align: center
+        text-decoration: none
+        color: $black
 
     button
       vertical-align: top
@@ -45,7 +51,7 @@
 
     &:hover
       background-color: transparent
-      button
+      button, a
         visibility: visible
         opacity: 1
         transition: background-color .2s

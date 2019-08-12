@@ -1,20 +1,20 @@
-import React, { useState, FormEvent } from "react"
+import React, { useState, useContext, FormEvent } from "react"
 import { Id } from "../treey/src/types/types"
-import { Treey } from "../hooks/useTreey"
 import useEscListener from "../hooks/useEscListener"
+import TreeyContext from "../contexts/TreeyContext"
 import Button from "./Button"
 
 import "../styles/FormAdd.sass"
 
 interface Props {
   parentId: Id
-  treey: Treey
 }
 
-const FormAdd: React.FC<Props> = ({ parentId, treey }) => {
+const FormAdd: React.FC<Props> = ({ parentId }) => {
 
   const [isAdding, setIsAdding] = useState(false)
   const [value, setValue] = useState("")
+  const { treey } = useContext(TreeyContext)
 
   const showButton = isAdding === false
   const showForm = !showButton
@@ -22,6 +22,7 @@ const FormAdd: React.FC<Props> = ({ parentId, treey }) => {
   const onClick = () => setIsAdding(true)
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault()
+    if (treey == null) return
     await treey.createAndAdd(value, parentId)
     setIsAdding(false)
     setValue("")

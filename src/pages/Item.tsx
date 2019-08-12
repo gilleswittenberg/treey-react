@@ -1,9 +1,16 @@
 import React from "react"
+import { RouteComponentProps } from "@reach/router"
 import ItemOverview from "../components/ItemOverview"
 
-const PageItem: React.SFC = () => {
+interface Props extends RouteComponentProps {
+  fullName?: string
+}
+
+const PageItem: React.SFC<Props> = ({ fullName }) => {
   return (
-    <ItemOverview/>
+    <div className="Page PageItem">
+      <ItemOverview fullName={ fullName || "" } />
+    </div>
   )
 }
 

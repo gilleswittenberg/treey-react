@@ -3,18 +3,15 @@ import TreeItem, { TreeItems } from "../treey/src/types/TreeItem"
 import { Id } from "../treey/src/types/types"
 import Item from "./Item"
 import FormAdd from "./FormAdd"
-import { Treey } from "../hooks/useTreey"
 
 import "../styles/Items.sass"
 
 interface Props {
   parentId: Id
   items: TreeItems
-  treey: Treey
-  switchRoute: any
 }
 
-const Items: React.FC<Props> = ({ parentId, items, treey, switchRoute }) => {
+const Items: React.FC<Props> = ({ parentId, items }) => {
 
   const showItems = items.length > 0
 
@@ -25,14 +22,14 @@ const Items: React.FC<Props> = ({ parentId, items, treey, switchRoute }) => {
           { items.map((item: TreeItem, index: number) => {
               return (
                 <li key={ item.name }>
-                  <Item parentId={ parentId } index={ index } item={ item } treey={ treey } switchRoute={ switchRoute } />
+                  <Item parentId={ parentId } index={ index } item={ item } />
                 </li>
               )
             })
           }
         </ul>
       }
-      <FormAdd parentId={ parentId } treey={ treey }/>
+      <FormAdd parentId={ parentId } />
     </div>
   )
 }

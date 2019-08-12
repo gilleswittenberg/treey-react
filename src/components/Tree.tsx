@@ -8,10 +8,9 @@ import "../styles/Tree.sass"
 interface Props {
   tree: TreeItem
   treey: Treey
-  switchRoute: any
 }
 
-const Tree: React.FC<Props> = ({ tree, treey, switchRoute }) => {
+const Tree: React.FC<Props> = ({ tree, treey }) => {
 
   const items = tree && tree.relations
   const id = tree && tree.state.ids && tree.state.ids[0]
@@ -19,7 +18,7 @@ const Tree: React.FC<Props> = ({ tree, treey, switchRoute }) => {
   return (
     <div className="Tree">
       { id &&
-        <Items parentId={ id } items={ items } treey={ treey } switchRoute={ switchRoute } />
+        <Items parentId={ id } items={ items } />
       }
     </div>
   )

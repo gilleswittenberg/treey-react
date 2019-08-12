@@ -1,30 +1,36 @@
 import React, { useState, useContext, useEffect } from "react"
 import TreeyContext from "../contexts/TreeyContext"
-import TreeItem from "../treey/src/types/TreeItem"
 import { ItemEventType } from "../treey/src/types/Item"
+import TreeItem from "../treey/src/types/TreeItem"
+import { parseFullName } from "../treey/src/createFullName"
 
 import "../styles/ItemOverview.sass"
 
-const ItemOverview: React.FC = () => {
+interface Props {
+  fullName: string
+}
 
-  const pathElements = document.location.pathname.split("/")
-  const l = pathElements.length
-  const protocol = pathElements[l - 2]
-  const name = pathElements[l - 1]
-  const [treeyId] = useState({ protocol, name })
+const ItemOverview: React.FC<Props> = ({ fullName }) => {
 
   const [item, setItem] = useState<TreeItem>()
+  const [notFound, setNotFound] = useState(false)
+  const [invalidFullName, setInvalidFullName] = useState(false)
   const { treey } = useContext(TreeyContext)
 
   useEffect(() => {
+    if (treey == null) return
+    const id = parseFullName(fullName)
+    if (id == null) {
+      setInvalidFullName(true)
+      return
+    }
     (async () => {
-      if (treey == null) return
-      const item = await treey.read(treeyId)
-      setItem(item)
+      const item = await treey.read(id)
+      item !== undefined ? setItem(item) : setNotFound(true)
     })()
-  }, [treey, treeyId])
+  }, [treey, fullName])
 
-  const isLoading = item == null
+  const isLoading = notFound === false && invalidFullName === false && item == null
   const showItem = item != null
   const itemName = item && item.name
   const state = item && JSON.stringify(item.state)
@@ -33,6 +39,12 @@ const ItemOverview: React.FC = () => {
     <div className="ItemOverview">
       { isLoading &&
         <p>is loading&hellip;</p>
+      }
+      { invalidFullName &&
+        <p>{ fullName } is not valid</p>
+      }
+      { notFound &&
+        <p>{ fullName } not found</p>
       }
       { showItem &&
         <>
