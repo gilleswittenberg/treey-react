@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react"
-import { Data, Id, Index } from "../treey/src/types/types"
 import { init, read, createAndAdd, update, remove, move } from "../treey/src/treey"
 import TreeItem from "../treey/src/types/TreeItem"
 

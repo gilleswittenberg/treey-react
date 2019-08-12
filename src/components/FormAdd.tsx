@@ -1,5 +1,4 @@
 import React, { useState, useContext, FormEvent } from "react"
-import { Id } from "../treey/src/types/types"
 import useEscListener from "../hooks/useEscListener"
 import TreeyContext from "../contexts/TreeyContext"
 import Button from "./Button"

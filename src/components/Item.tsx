@@ -1,7 +1,6 @@
 import React, { useState, useContext, FormEvent } from "react"
 import { Link } from "@reach/router"
 import TreeItem from "../treey/src/types/TreeItem"
-import { Id, Index } from "../treey/src/types/types"
 import TreeyContext from "../contexts/TreeyContext"
 import useEscListener from "../hooks/useEscListener"
 import Items from "./Items"
