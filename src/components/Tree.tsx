@@ -1,6 +1,5 @@
 import React from "react"
 import { Treey } from "../hooks/useTreey"
-import TreeItem from "../treey/src/types/TreeItem"
 import Items from "./Items"
 
 import "../styles/Tree.sass"

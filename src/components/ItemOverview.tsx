@@ -1,8 +1,6 @@
 import React, { useState, useContext, useEffect } from "react"
 import TreeyContext from "../contexts/TreeyContext"
-import { ItemEventType } from "../treey/src/types/Item"
-import TreeItem from "../treey/src/types/TreeItem"
-import { parseFullName } from "../treey/src/createFullName"
+import { parseFullName } from "../treey/src/factories/createFullName"
 
 import "../styles/ItemOverview.sass"
 
@@ -54,13 +52,12 @@ const ItemOverview: React.FC<Props> = ({ fullName }) => {
           <h2>events</h2>
           <ul>
             { item && item.events.map((event, index) => {
-                const eventType = ItemEventType[event.type]
                 const payload = event.payload ? JSON.stringify(event.payload) : null
                 const showPayload = payload != null
                 const datetime = String(event.datetime)
                 return (
                   <li key={ index }>
-                    <strong>{ eventType }</strong><br/>
+                    <strong>{ event.type }</strong><br/>
                     { showPayload && <><span className="small">{ payload }</span><br/></> }
                     { datetime }
                   </li>

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react"
 import { init, read, createAndAdd, update, remove, move } from "../treey/src/treey"
-import TreeItem from "../treey/src/types/TreeItem"
 
 export interface Treey {
   read: (id: Id) => Promise<TreeItem | undefined>

@@ -1,6 +1,5 @@
 import React, { useState, useContext, FormEvent } from "react"
 import { Link } from "@reach/router"
-import TreeItem from "../treey/src/types/TreeItem"
 import TreeyContext from "../contexts/TreeyContext"
 import useEscListener from "../hooks/useEscListener"
 import Items from "./Items"
@@ -19,7 +18,7 @@ const getId = (item: TreeItem) : Id | undefined => item.state.ids && item.state.
 const Item: React.FC<Props> = ({ parentId, index, item }) => {
 
   const id = getId(item)
-  const data = item.state && item.state.data
+  const data = item.state && item.state.data as string
 
   const [isEditing, setIsEditing] = useState(false)
   const [value, setValue] = useState(data)

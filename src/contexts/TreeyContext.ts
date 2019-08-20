@@ -1,5 +1,4 @@
 import { createContext } from "react"
-import TreeItem from "../treey/src/types/TreeItem"
 import { Treey } from "../hooks/useTreey"
 
 interface Value {

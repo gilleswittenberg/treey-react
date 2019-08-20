@@ -1,5 +1,4 @@
 import React from "react"
-import TreeItem, { TreeItems } from "../treey/src/types/TreeItem"
 import Item from "./Item"
 import FormAdd from "./FormAdd"
 
