@@ -17,7 +17,7 @@ const Items: React.FC<Props> = ({ parentId, items }) => {
     <div className="Items">
       { showItems &&
         <ul>
-          { items.map((item: TreeItem, index: number) => {
+          { items.map((item, index) => {
               return (
                 <li key={ item.name }>
                   <Item parentId={ parentId } index={ index } item={ item } />

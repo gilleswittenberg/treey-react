@@ -1,8 +1,11 @@
 import React, { useState, useContext, useEffect } from "react"
 import TreeyContext from "../contexts/TreeyContext"
-import { parseFullName } from "../treey/src/factories/createFullName"
+import treey from "treey"
 
 import "../styles/ItemOverview.sass"
+
+const { utils: { parseFullName } } = treey
+
 
 interface Props {
   fullName: string
@@ -51,7 +54,7 @@ const ItemOverview: React.FC<Props> = ({ fullName }) => {
           <p className="small">{ state }</p>
           <h2>events</h2>
           <ul>
-            { item && item.events.map((event, index) => {
+            { item && item.events.map((event: ItemEvent, index: number) => {
                 const payload = event.payload ? JSON.stringify(event.payload) : null
                 const showPayload = payload != null
                 const datetime = String(event.datetime)

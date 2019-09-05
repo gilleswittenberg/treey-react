@@ -18,7 +18,7 @@ const getId = (item: TreeItem) : Id | undefined => item.state.ids && item.state.
 const Item: React.FC<Props> = ({ parentId, index, item }) => {
 
   const id = getId(item)
-  const data = item.state && item.state.data as string
+  const data = item.state && item.state.data as Data
 
   const [isEditing, setIsEditing] = useState(false)
   const [value, setValue] = useState(data)
