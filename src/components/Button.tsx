@@ -4,7 +4,7 @@ import "../styles/Button.sass"
 
 type ButtonType = "ADD" | "EDIT" | "DELETE"
 
-interface Props {
+type Props = {
   type: ButtonType
   onClick?: () => void
 }

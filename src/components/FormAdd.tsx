@@ -5,7 +5,7 @@ import Button from "./Button"
 
 import "../styles/FormAdd.sass"
 
-interface Props {
+type Props = {
   parentId: Id
 }
 

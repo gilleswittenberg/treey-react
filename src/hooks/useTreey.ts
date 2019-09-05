@@ -1,15 +1,6 @@
 import { useState, useEffect } from "react"
-
 import treey from "treey"
 const { treey: { init, read, createAndAdd, update, remove, move } } = treey
-
-export interface Treey {
-  read (id: Id) : Promise<TreeItem | undefined>
-  createAndAdd (data: Data, parentId: Id) : void
-  update (id: Id, data: Data) : void
-  remove (id: Id, parentId: Id, index: Index) : void
-  move (id: Id, oldParentId: Id, oldIndex: Index, parentId: Id, index: Index) : void
-}
 
 const useTreey = () => {
   const [tree, setTree] = useState()

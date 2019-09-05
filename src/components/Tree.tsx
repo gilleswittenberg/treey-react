@@ -1,10 +1,9 @@
 import React from "react"
-import { Treey } from "../hooks/useTreey"
 import Items from "./Items"
 
 import "../styles/Tree.sass"
 
-interface Props {
+type Props = {
   tree: TreeItem
   treey: Treey
 }

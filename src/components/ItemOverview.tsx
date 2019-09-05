@@ -7,7 +7,7 @@ import "../styles/ItemOverview.sass"
 const { utils: { parseFullName } } = treey
 
 
-interface Props {
+type Props = {
   fullName: string
 }
 

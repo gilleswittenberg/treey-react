@@ -2,7 +2,7 @@ import React, { ReactNode } from "react"
 import TreeyContext from '../contexts/TreeyContext'
 import useTreey from "../hooks/useTreey"
 
-interface Props {
+type Props = {
   children: ReactNode
 }
 

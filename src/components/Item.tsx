@@ -7,7 +7,7 @@ import Button from "./Button"
 
 import "../styles/Item.sass"
 
-interface Props {
+type Props = {
   parentId: Id
   index: Index
   item: TreeItem

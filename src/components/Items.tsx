@@ -4,7 +4,7 @@ import FormAdd from "./FormAdd"
 
 import "../styles/Items.sass"
 
-interface Props {
+type Props = {
   parentId: Id
   items: TreeItems
 }

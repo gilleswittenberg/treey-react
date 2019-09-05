@@ -1,7 +1,6 @@
 import { createContext } from "react"
-import { Treey } from "../hooks/useTreey"
 
-interface Value {
+type Value = {
   tree: TreeItem | null
   treey: Treey | null
 }
