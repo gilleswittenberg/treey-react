@@ -5,11 +5,11 @@ import FormAdd from "./FormAdd"
 import "../styles/Items.sass"
 
 type Props = {
-  parentId: Id
+  parents: Ids
   items: TreeItems
 }
 
-const Items: React.FC<Props> = ({ parentId, items }) => {
+const Items: React.FC<Props> = ({ parents, items }) => {
 
   const showItems = items.length > 0
 
@@ -20,14 +20,14 @@ const Items: React.FC<Props> = ({ parentId, items }) => {
           { items.map((item, index) => {
               return (
                 <li key={ item.name }>
-                  <Item parentId={ parentId } index={ index } item={ item } />
+                  <Item parents={ parents } index={ index } item={ item } />
                 </li>
               )
             })
           }
         </ul>
       }
-      <FormAdd parentId={ parentId } />
+      <FormAdd parents={ parents } />
     </div>
   )
 }

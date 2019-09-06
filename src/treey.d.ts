@@ -1,4 +1,11 @@
-declare type Id = string
+declare type Name = string
+declare type FullName = string
+declare type Protocol = string
+declare type Id = {
+  name: Name
+  protocol?: Protocol
+}
+declare type Ids = Id[]
 declare type Data = any
 declare type Index = number
 declare type TreeItem = any

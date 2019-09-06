@@ -12,11 +12,12 @@ const Tree: React.FC<Props> = ({ tree, treey }) => {
 
   const items = tree && tree.relations
   const id = tree && tree.state.ids && tree.state.ids[0]
+  const parents = [id]
 
   return (
     <div className="Tree">
       { id &&
-        <Items parentId={ id } items={ items } />
+        <Items parents={ parents } items={ items } />
       }
     </div>
   )
