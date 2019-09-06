@@ -7,8 +7,6 @@ import PageHome from "./pages/Home"
 import PageItem from "./pages/Item"
 import Page404 from "./pages/404"
 
-import "./styles/App.sass"
-
 const App: React.FC = () => {
 
   return (

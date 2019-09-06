@@ -4,7 +4,9 @@ import TreeyContext from "../contexts/TreeyContext"
 import Spinner from "../components/Spinner"
 import Tree from "../components/Tree"
 
-interface Props extends RouteComponentProps {}
+import "../styles/Home.sass"
+
+type Props = RouteComponentProps
 
 const PageHome: React.FC<Props> = () => {
 

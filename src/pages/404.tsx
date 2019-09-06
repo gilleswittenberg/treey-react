@@ -3,7 +3,7 @@ import { RouteComponentProps } from "@reach/router"
 
 import "../styles/Page404.sass"
 
-interface Props extends RouteComponentProps {}
+type Props = RouteComponentProps
 
 const Page404: React.SFC<Props> = () => {
   return (

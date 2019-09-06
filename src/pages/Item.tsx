@@ -2,7 +2,7 @@ import React from "react"
 import { RouteComponentProps } from "@reach/router"
 import ItemOverview from "../components/ItemOverview"
 
-interface Props extends RouteComponentProps {
+type Props = RouteComponentProps & {
   fullName?: string
 }
 

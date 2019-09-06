@@ -1,7 +1,9 @@
 import React from "react"
 
+import "../styles/Spinner.sass"
+
 const Spinner: React.SFC = () => {
-  return (<p>is loading&hellip;</p>)
+  return (<p className="spinner">is loading&hellip;</p>)
 }
 
 export default Spinner
