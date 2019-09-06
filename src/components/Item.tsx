@@ -56,7 +56,7 @@ const Item: React.FC<Props> = ({ parents, index, item }) => {
   }
 
   return (
-    <div className="Item">
+    <div className="Item" onClick={ event => event.stopPropagation() }>
       { showItem &&
         <div className="ItemBody">
           <span onClick={ onClick }>
