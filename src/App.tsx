@@ -9,13 +9,15 @@ import Page404 from "./pages/404"
 
 const App: React.FC = () => {
 
+  const basepath = window.location.host === "gilleswittenberg.github.io" ? "/treey-react" : "/"
+
   return (
     <div className="App">
       <Header/>
       <main>
         <TreeyProvider>
           <UIProvider>
-            <Router>
+            <Router basepath={ basepath }>
               <PageHome path="/" />
               <PageItem path="item/:fullName" />
               <Page404 default />
