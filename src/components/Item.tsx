@@ -15,14 +15,15 @@ type Props = {
 }
 
 const getId = (item: TreeItem) : Id | undefined => item.state.ids && item.state.ids[0]
+const getData = (item: TreeItem) : Data => item.state && item.state.data
 
 const Item: React.FC<Props> = ({ parents, index, item }) => {
 
   const id = getId(item)
   const parentId = last(parents)
   const path = id ? parents.concat(id) : undefined
-  const pathString = path ? path.map(i => i.name).join("/") : undefined
-  const data = item.state && item.state.data as Data
+  const pathString = path ? path.map(id => id.name).join("/") : undefined
+  const data = getData(item)
 
   const [value, setValue] = useState(data)
   const [isOpened, setIsOpened] = useState(false)
