@@ -36,7 +36,11 @@ const Item: React.FC<Props> = ({ parents, index, item }) => {
 
   const linkTo = `/item/${ item.name }`
 
-  const onClick = () => setIsOpened(!isOpened)
+  const onClick = () => {
+    const selection = window.getSelection()
+    if (selection && selection.toString() !== "") return
+    setIsOpened(!isOpened)
+  }
   const onClickEdit = () => setShownForm(path)
   const onClickDelete = async () => {
     if (treey == null) return
@@ -60,7 +64,9 @@ const Item: React.FC<Props> = ({ parents, index, item }) => {
       { showItem &&
         <div className="ItemBody">
           <span onClick={ onClick }>
-            { data }
+            <span className="text">
+              { data }
+            </span>
             <Link to={ linkTo } className="info">ⓘ</Link>
           </span>
           <Button type="EDIT" onClick={ onClickEdit } />
