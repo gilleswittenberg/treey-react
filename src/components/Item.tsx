@@ -4,6 +4,7 @@ import TreeyContext from "../contexts/TreeyContext"
 import UIContext from "../contexts/UIContext"
 import Items from "./Items"
 import Button from "./Button"
+import ItemData from "./ItemData"
 import last from "../utils/last"
 
 import "../styles/Item.sass"
@@ -64,9 +65,7 @@ const Item: React.FC<Props> = ({ parents, index, item }) => {
       { showItem &&
         <div className="ItemBody">
           <span onClick={ onClick }>
-            <span className="text">
-              { data }
-            </span>
+            <ItemData data={ data} />
             <Link to={ linkTo } className="info">ⓘ</Link>
           </span>
           <Button type="EDIT" onClick={ onClickEdit } />
