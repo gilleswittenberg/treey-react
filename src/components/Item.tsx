@@ -21,16 +21,15 @@ const Item: React.FC<Props> = ({ parents, index, item }) => {
 
   const id = getId(item)
   const parentId = last(parents)
-  const path = id ? parents.concat(id) : undefined
-  const pathString = path ? path.map(id => id.name).join("/") : undefined
+  const path = id ? parents.concat(id) : parents
   const data = getData(item)
 
   const [value, setValue] = useState(data)
   const [isOpened, setIsOpened] = useState(false)
   const { treey } = useContext(TreeyContext)
-  const { shownForm, setShownForm } = useContext(UIContext)
+  const { isShownForm, setShownForm, unsetShownForm } = useContext(UIContext)
 
-  const isEditing = shownForm === pathString
+  const isEditing = isShownForm(path)
   const showItem = !isEditing
   const showForm = isEditing
   const showItems = id && isOpened
@@ -38,7 +37,7 @@ const Item: React.FC<Props> = ({ parents, index, item }) => {
   const linkTo = `/item/${ item.name }`
 
   const onClick = () => setIsOpened(!isOpened)
-  const onClickEdit = () => setShownForm(pathString)
+  const onClickEdit = () => setShownForm(path)
   const onClickDelete = async () => {
     if (treey == null) return
     if (id == null) return
@@ -49,7 +48,7 @@ const Item: React.FC<Props> = ({ parents, index, item }) => {
     if (treey == null) return
     if (id == null) return
     await treey.update(id, value)
-    setShownForm(null)
+    unsetShownForm()
   }
   const onChange = (event: FormEvent) => {
     const value = (event.target as HTMLInputElement).value

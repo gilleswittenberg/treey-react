@@ -13,20 +13,19 @@ type Props = {
 const FormAdd: React.FC<Props> = ({ parents }) => {
 
   const parentId = last(parents)
-  const pathString = parents.map(i => i.name).join("/") + "/add"
   const [value, setValue] = useState("")
   const { treey } = useContext(TreeyContext)
-  const { shownForm, setShownForm } = useContext(UIContext)
+  const { isShownForm, setShownForm, unsetShownForm } = useContext(UIContext)
 
-  const showForm = shownForm === pathString
+  const showForm = isShownForm(parents, true)
   const showButton = !showForm
 
-  const onClick = () => setShownForm(pathString)
+  const onClick = () => setShownForm(parents, true)
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault()
     if (treey == null) return
     await treey.createAndAdd(value, parentId)
-    setShownForm(null)
+    unsetShownForm()
     setValue("")
   }
   const onChange = (event: FormEvent) => {
