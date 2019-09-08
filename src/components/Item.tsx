@@ -6,6 +6,7 @@ import Items from "./Items"
 import Button from "./Button"
 import ItemData from "./ItemData"
 import last from "../utils/last"
+import basepath from "../utils/basepath"
 
 import "../styles/Item.sass"
 
@@ -35,7 +36,8 @@ const Item: React.FC<Props> = ({ parents, index, item }) => {
   const showForm = isEditing
   const showItems = id && isOpened
 
-  const linkTo = `/item/${ item.name }`
+  const linkTo = `${ basepath }item/${ item.name }`
+  console.log(linkTo)
 
   const onClick = () => {
     const selection = window.getSelection()
