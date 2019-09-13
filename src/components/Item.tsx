@@ -5,8 +5,11 @@ import UIContext from "../contexts/UIContext"
 import Items from "./Items"
 import Button from "./Button"
 import ItemData from "./ItemData"
+import { getId, getPath, getData } from "../utils/treeItemUtils"
 import last from "../utils/last"
 import basepath from "../utils/basepath"
+import cs from "classnames"
+
 
 import "../styles/Item.sass"
 
@@ -14,16 +17,14 @@ type Props = {
   parents: Ids
   index: Index
   item: TreeItem
+  isDragging: boolean
 }
 
-const getId = (item: TreeItem) : Id | undefined => item.state.ids && item.state.ids[0]
-const getData = (item: TreeItem) : Data => item.state && item.state.data
-
-const Item: React.FC<Props> = ({ parents, index, item }) => {
+const Item: React.FC<Props> = ({ parents, index, item, isDragging }) => {
 
   const id = getId(item)
   const parentId = last(parents)
-  const path = id ? parents.concat(id) : parents
+  const path = getPath(id, parents)
   const data = getData(item)
 
   const [value, setValue] = useState(data)
@@ -32,12 +33,11 @@ const Item: React.FC<Props> = ({ parents, index, item }) => {
   const { isShownForm, setShownForm, unsetShownForm } = useContext(UIContext)
 
   const isEditing = isShownForm(path)
-  const showItem = !isEditing
-  const showForm = isEditing
-  const showItems = id && isOpened
+  const showItem = isDragging || !isEditing
+  const showForm = !isDragging && isEditing
+  const showItems = !isDragging && isOpened
 
   const linkTo = `${ basepath }item/${ item.name }`
-  console.log(linkTo)
 
   const onClick = () => {
     const selection = window.getSelection()
@@ -64,25 +64,21 @@ const Item: React.FC<Props> = ({ parents, index, item }) => {
 
   return (
     <div className="Item" onClick={ event => event.stopPropagation() }>
-      { showItem &&
-        <div className="ItemBody">
-          <span onClick={ onClick }>
-            <ItemData data={ data} />
-            <Link to={ linkTo } className="info">ⓘ</Link>
-          </span>
-          <Button type="EDIT" onClick={ onClickEdit } />
-          <Button type="DELETE" onClick={ onClickDelete } />
-        </div>
-      }
-      { showForm &&
-        <form onSubmit={ onSubmit }>
-          <input type="text" onChange={ onChange } value={ value } autoFocus />
-          <Button type="EDIT" />
-        </form>
-      }
-      { id && path && showItems &&
+      <div className={ cs("ItemBody", { isHidden: !showItem }) }>
+        <span onClick={ onClick }>
+          <ItemData data={ data} />
+          <Link to={ linkTo } className="info">ⓘ</Link>
+        </span>
+        <Button type="EDIT" onClick={ onClickEdit } />
+        <Button type="DELETE" onClick={ onClickDelete } />
+      </div>
+      <form onSubmit={ onSubmit } className={ cs({ isHidden: !showForm }) }>
+        <input type="text" onChange={ onChange } value={ value } autoFocus />
+        <Button type="EDIT" />
+      </form>
+      <div className={ cs({ isHidden: !showItems }) }>
         <Items parents={ path } items={ item.relations } />
-      }
+      </div>
     </div>
   )
 }

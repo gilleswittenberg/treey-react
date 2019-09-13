@@ -1,5 +1,5 @@
 import React from "react"
-import Item from "./Item"
+import DnDItem from "./DnDItem"
 import FormAdd from "./FormAdd"
 
 import "../styles/Items.sass"
@@ -17,13 +17,11 @@ const Items: React.FC<Props> = ({ parents, items }) => {
     <div className="Items">
       { showItems &&
         <ul>
-          { items.map((item, index) => {
-              return (
-                <li key={ item.name }>
-                  <Item parents={ parents } index={ index } item={ item } />
-                </li>
-              )
-            })
+          { items.map((item, index) => (
+              <li key={ item.name }>
+                <DnDItem parents={ parents } index={ index } item={ item } />
+              </li>
+            ))
           }
         </ul>
       }

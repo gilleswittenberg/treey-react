@@ -1,5 +1,7 @@
 import React from "react"
 import Items from "./Items"
+import { DndProvider } from "react-dnd"
+import HTML5Backend from "react-dnd-html5-backend"
 
 import "../styles/Tree.sass"
 
@@ -17,7 +19,9 @@ const Tree: React.FC<Props> = ({ tree, treey }) => {
   return (
     <div className="Tree">
       { id &&
-        <Items parents={ parents } items={ items } />
+        <DndProvider backend={ HTML5Backend }>
+          <Items parents={ parents } items={ items } />
+        </DndProvider>
       }
     </div>
   )
