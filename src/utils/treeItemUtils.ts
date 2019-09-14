@@ -7,7 +7,7 @@ export const getPath = (id: Id | undefined, parents: Ids) : Ids => id ? parents.
 export const getName = (id: Id | undefined, parents: Ids) : Name => getPath(id, parents).map(id => createFullName(id)).join("/")
 export const stringifyData = (data: Data) : string => {
   if (typeof data === "string") return data
-  return JSON.stringify(data)
+  return JSON.stringify(data, undefined, 1)
 }
 export const parseData = (str: string) : Data => {
   try {
