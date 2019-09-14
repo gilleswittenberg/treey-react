@@ -5,7 +5,7 @@ import UIContext from "../contexts/UIContext"
 import Items from "./Items"
 import Button from "./Button"
 import ItemData from "./ItemData"
-import { getId, getPath, getData } from "../utils/treeItemUtils"
+import { getId, getPath, getData, stringifyData } from "../utils/treeItemUtils"
 import last from "../utils/last"
 import basepath from "../utils/basepath"
 import cs from "classnames"
@@ -25,6 +25,7 @@ const Item: React.FC<Props> = ({ parents, index, item, isDragging }) => {
   const parentId = last(parents)
   const path = getPath(id, parents)
   const data = getData(item)
+  const dataString = stringifyData(data)
   const hasRelations = item.relations.length > 0
 
   const [value, setValue] = useState(data)
@@ -73,7 +74,7 @@ const Item: React.FC<Props> = ({ parents, index, item, isDragging }) => {
     <div className="Item" onClick={ event => event.stopPropagation() }>
       <div className={ cs("ItemBody", { isHidden: !showItem, showAddButton }) }>
         <span onClick={ onClick }>
-          <ItemData data={ data } />
+          <ItemData data={ dataString } />
           <Link to={ linkTo } className="info">ⓘ</Link>
         </span>
         { showAddButton &&
