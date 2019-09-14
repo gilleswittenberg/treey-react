@@ -10,7 +10,6 @@ import last from "../utils/last"
 import basepath from "../utils/basepath"
 import cs from "classnames"
 
-
 import "../styles/Item.sass"
 
 type Props = {

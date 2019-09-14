@@ -4,6 +4,7 @@ import TreeyContext from "../contexts/TreeyContext"
 import Item from "./Item"
 import { getId, getName } from "../utils/treeItemUtils"
 import last from "../utils/last"
+import cs from "classnames"
 
 import "../styles/DnDItem.sass"
 
@@ -42,13 +43,22 @@ const DnDItem: React.FC<Props> = ({ parents, index, item }) => {
     accept: "item",
     canDrop: (item, monitor) => monitor.getItem().name !== name,
     drop: async (item, monitor) => {
+
+      // guard for nested drop targets
       if (monitor.didDrop()) return
+
       const draggableData = item as DraggableData
       const id = draggableData.id
       const oldParentId = last(draggableData.parents)
       const oldIndex = draggableData.index
       const parentId = last(parents)
-      const newIndex = hoverRegion === "top" ? index : index + 1
+      // add one if hover over bottom
+      // substract one if draggable came from before droppable
+      const newIndex = index + (hoverRegion === "bottom" ? 1 : 0) - (oldParentId === parentId && oldIndex < index ? 1 : 0)
+      // guard for dropped on previous location
+      if (oldParentId === parentId && oldIndex === newIndex) return
+
+      // guard for null treey context
       if (treey == null) return
       await treey.move(id, oldParentId, oldIndex, parentId, newIndex)
     },
@@ -78,7 +88,7 @@ const DnDItem: React.FC<Props> = ({ parents, index, item }) => {
         { showPrePlaceholder &&
           <div className="dnd-placeholder"></div>
         }
-        <div ref={ drag }>
+        <div ref={ drag } className={ cs({ isHidden: isDragging }) }>
           <Item parents={ parents } index={ index } item={ item } isDragging={ isDragging } />
         </div>
         { showPostPlaceholder &&
