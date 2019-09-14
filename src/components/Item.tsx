@@ -73,7 +73,7 @@ const Item: React.FC<Props> = ({ parents, index, item, isDragging }) => {
     <div className="Item" onClick={ event => event.stopPropagation() }>
       <div className={ cs("ItemBody", { isHidden: !showItem, showAddButton }) }>
         <span onClick={ onClick }>
-          <ItemData data={ data} />
+          <ItemData data={ data } />
           <Link to={ linkTo } className="info">ⓘ</Link>
         </span>
         { showAddButton &&
