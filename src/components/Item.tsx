@@ -5,7 +5,7 @@ import UIContext from "../contexts/UIContext"
 import Items from "./Items"
 import Button from "./Button"
 import ItemData from "./ItemData"
-import { getId, getPath, getData, stringifyData } from "../utils/treeItemUtils"
+import { getId, getPath, getData, stringifyData, parseData } from "../utils/treeItemUtils"
 import last from "../utils/last"
 import basepath from "../utils/basepath"
 import cs from "classnames"
@@ -62,7 +62,8 @@ const Item: React.FC<Props> = ({ parents, index, item, isDragging }) => {
     event.preventDefault()
     if (treey == null) return
     if (id == null) return
-    await treey.update(id, value)
+    const data = parseData(value)
+    await treey.update(id, data)
     unsetShownForm()
   }
   const onChange = (event: FormEvent) => {

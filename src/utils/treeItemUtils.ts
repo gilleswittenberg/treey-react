@@ -9,3 +9,10 @@ export const stringifyData = (data: Data) : string => {
   if (typeof data === "string") return data
   return JSON.stringify(data)
 }
+export const parseData = (str: string) : Data => {
+  try {
+    return JSON.parse(str)
+  } catch (err) {
+    return str
+  }
+}
