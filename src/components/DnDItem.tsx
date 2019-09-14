@@ -60,7 +60,7 @@ const DnDItem: React.FC<Props> = ({ parents, index, item }) => {
 
       // guard for null treey context
       if (treey == null) return
-      await treey.move(id, oldParentId, oldIndex, parentId, newIndex)
+      await treey.move(id, oldParentId, parentId, oldIndex, newIndex)
     },
     hover: (item, monitor) => {
       const clientOffset = monitor.getClientOffset()
