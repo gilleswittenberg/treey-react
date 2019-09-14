@@ -13,6 +13,10 @@
     background-color: $lightGray
     border-radius: $borderRadius
 
+    &.showAddButton
+      > span
+        width: calc(100% - #{ $height * 3 + $bottomSpacing * 3 + $paddingLeft })
+
     > span
       display: inline-block
       width: calc(100% - #{ $height * 2 + $bottomSpacing * 2 + $paddingLeft })

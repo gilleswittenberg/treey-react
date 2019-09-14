@@ -26,6 +26,7 @@ const Item: React.FC<Props> = ({ parents, index, item, isDragging }) => {
   const parentId = last(parents)
   const path = getPath(id, parents)
   const data = getData(item)
+  const hasRelations = item.relations.length > 0
 
   const [value, setValue] = useState(data)
   const [isOpened, setIsOpened] = useState(false)
@@ -35,14 +36,21 @@ const Item: React.FC<Props> = ({ parents, index, item, isDragging }) => {
   const isEditing = isShownForm(path)
   const showItem = isDragging || !isEditing
   const showForm = !isDragging && isEditing
-  const showItems = !isDragging && isOpened
+  const showItems = !isDragging && ((isOpened && hasRelations) || isShownForm(path, true))
+  const showAddButton = !hasRelations
 
   const linkTo = `${ basepath }item/${ item.name }`
 
   const onClick = () => {
+    if (isShownForm(path, true)) unsetShownForm()
     const selection = window.getSelection()
     if (selection && selection.toString() !== "") return
+    if (!hasRelations) return
     setIsOpened(!isOpened)
+  }
+  const onClickAdd = () => {
+    setShownForm(path, true)
+    setIsOpened(true)
   }
   const onClickEdit = () => setShownForm(path)
   const onClickDelete = async () => {
@@ -64,11 +72,14 @@ const Item: React.FC<Props> = ({ parents, index, item, isDragging }) => {
 
   return (
     <div className="Item" onClick={ event => event.stopPropagation() }>
-      <div className={ cs("ItemBody", { isHidden: !showItem }) }>
+      <div className={ cs("ItemBody", { isHidden: !showItem, showAddButton }) }>
         <span onClick={ onClick }>
           <ItemData data={ data} />
           <Link to={ linkTo } className="info">ⓘ</Link>
         </span>
+        { showAddButton &&
+          <Button type="ADD" onClick={ onClickAdd } />
+        }
         <Button type="EDIT" onClick={ onClickEdit } />
         <Button type="DELETE" onClick={ onClickDelete } />
       </div>
