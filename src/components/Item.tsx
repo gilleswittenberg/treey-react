@@ -28,7 +28,8 @@ const Item: React.FC<Props> = ({ parents, index, item, isDragging }) => {
   const dataString = stringifyData(data)
   const hasRelations = item.relations.length > 0
 
-  const [value, setValue] = useState(data)
+
+  const [value, setValue] = useState(dataString)
   const [isOpened, setIsOpened] = useState(false)
   const { treey } = useContext(TreeyContext)
   const { isShownForm, setShownForm, unsetShownForm } = useContext(UIContext)
@@ -85,7 +86,7 @@ const Item: React.FC<Props> = ({ parents, index, item, isDragging }) => {
         <Button type="DELETE" onClick={ onClickDelete } />
       </div>
       <form onSubmit={ onSubmit } className={ cs({ isHidden: !showForm }) }>
-        <input type="text" onChange={ onChange } value={ value } autoFocus />
+        <input type="text" value={ value } onChange={ onChange } ref={ elem => elem && elem.focus() } />
         <Button type="EDIT" />
       </form>
       <div className={ cs({ isHidden: !showItems }) }>
