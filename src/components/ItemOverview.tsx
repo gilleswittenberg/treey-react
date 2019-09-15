@@ -34,7 +34,7 @@ const ItemOverview: React.FC<Props> = ({ fullName }) => {
   const isLoading = notFound === false && invalidFullName === false && item == null
   const showItem = item != null
   const itemName = item && item.name
-  const state = item && JSON.stringify(item.state)
+  const state = item && JSON.stringify(item.state, undefined, 2)
 
   return (
     <div className="ItemOverview">
@@ -51,11 +51,11 @@ const ItemOverview: React.FC<Props> = ({ fullName }) => {
         <>
           <h1>{ itemName }</h1>
           <h2>state</h2>
-          <p className="small">{ state }</p>
+          <p className="small pre">{ state }</p>
           <h2>events</h2>
           <ul>
             { item && item.events.map((event: ItemEvent, index: number) => {
-                const payload = event.payload ? JSON.stringify(event.payload) : null
+                const payload = event.payload ? JSON.stringify(event.payload, undefined, 1) : null
                 const showPayload = payload != null
                 const datetime = String(event.datetime)
                 return (
