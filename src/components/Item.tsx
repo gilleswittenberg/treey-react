@@ -22,7 +22,6 @@ type Props = {
 
 const Item: React.FC<Props> = ({ parents, index, item, isDragging }) => {
 
-
   const id = getId(item)
   const parentId = last(parents)
   const path = getPath(id, parents)

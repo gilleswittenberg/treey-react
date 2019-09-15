@@ -14,27 +14,28 @@ type Props = {
 const FormAdd: React.FC<Props> = ({ parents }) => {
 
   const [value, setValue] = useState("")
+  const clearValue = () => setValue("")
   const { treey } = useContext(TreeyContext)
   const { isShownForm, setShownForm, unsetShownForm } = useContext(UIContext)
 
   const showForm = isShownForm(parents, true)
   const showButton = !showForm
 
-  const onClick = () => setShownForm(parents, true)
+  const onClick = () => {
+    clearValue()
+    setShownForm(parents, true)
+  }
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault()
+    unsetShownForm()
     const trimmedValue = value.trim()
-    if (trimmedValue === "") {
-      unsetShownForm()
-      return
-    }
-    if (treey == null) return
+    if (trimmedValue === "") return
+    if (treey === null) return
     const parentId = last(parents)
     if (parentId === undefined) return
     const data = parseData(trimmedValue)
     await treey.createAndAdd(data, parentId)
-    unsetShownForm()
-    setValue("")
+    clearValue()
   }
   const onChange = (event: FormEvent) => {
     const value = (event.target as HTMLInputElement).value
