@@ -32,7 +32,7 @@ const FormAdd: React.FC<Props> = ({ parents }) => {
     const parentId = last(parents)
     if (parentId === undefined) return
     const data = parseData(trimmedValue)
-    await treey.createAndAdd(value, parentId)
+    await treey.createAndAdd(data, parentId)
     unsetShownForm()
     setValue("")
   }

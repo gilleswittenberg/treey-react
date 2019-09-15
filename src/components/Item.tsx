@@ -9,6 +9,7 @@ import { getId, getPath, getData, stringifyData, parseData } from "../utils/tree
 import last from "../utils/last"
 import basepath from "../utils/basepath"
 import cs from "classnames"
+import { isEqual } from "lodash"
 
 import "../styles/Item.sass"
 
@@ -20,6 +21,7 @@ type Props = {
 }
 
 const Item: React.FC<Props> = ({ parents, index, item, isDragging }) => {
+
 
   const id = getId(item)
   const parentId = last(parents)
@@ -61,16 +63,14 @@ const Item: React.FC<Props> = ({ parents, index, item, isDragging }) => {
   const onClickDelete = remove
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault()
-    const trimmedValue = value.trim()
-    if (trimmedValue === "") {
-      remove()
-    } else {
-      const data = parseData(trimmedValue)
-      if (treey == null) return
-      if (id == null) return
-      await treey.update(id, data)
-    }
     unsetShownForm()
+    const trimmedValue = value.trim()
+    if (trimmedValue === "") return remove()
+    const newData = parseData(trimmedValue)
+    if (isEqual(data, newData)) return
+    if (treey == null) return
+    if (id == null) return
+    await treey.update(id, newData)
   }
   const onChange = (event: FormEvent) => {
     const value = (event.target as HTMLInputElement).value
