@@ -28,10 +28,14 @@ const Item: React.FC<Props> = ({ parents, index, item, isDragging }) => {
   const dataString = stringifyData(data)
   const hasRelations = item.relations.length > 0
 
-
   const [value, setValue] = useState(dataString)
   const [isOpened, setIsOpened] = useState(false)
   const { treey } = useContext(TreeyContext)
+  const remove = async () => {
+    if (treey == null) return
+    if (id == null) return
+    await treey.remove(id, parentId, index)
+  }
   const { isShownForm, setShownForm, unsetShownForm } = useContext(UIContext)
 
   const isEditing = isShownForm(path)
@@ -54,17 +58,18 @@ const Item: React.FC<Props> = ({ parents, index, item, isDragging }) => {
     setIsOpened(true)
   }
   const onClickEdit = () => setShownForm(path)
-  const onClickDelete = async () => {
-    if (treey == null) return
-    if (id == null) return
-    await treey.remove(id, parentId, index)
-  }
+  const onClickDelete = remove
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault()
-    if (treey == null) return
-    if (id == null) return
-    const data = parseData(value)
-    await treey.update(id, data)
+    const trimmedValue = value.trim()
+    if (trimmedValue === "") {
+      remove()
+    } else {
+      const data = parseData(trimmedValue)
+      if (treey == null) return
+      if (id == null) return
+      await treey.update(id, data)
+    }
     unsetShownForm()
   }
   const onChange = (event: FormEvent) => {

@@ -3,6 +3,7 @@ import TreeyContext from "../contexts/TreeyContext"
 import UIContext from "../contexts/UIContext"
 import Button from "./Button"
 import last from "../utils/last"
+import { parseData } from "../utils/treeItemUtils"
 
 import "../styles/FormAdd.sass"
 
@@ -22,9 +23,15 @@ const FormAdd: React.FC<Props> = ({ parents }) => {
   const onClick = () => setShownForm(parents, true)
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault()
+    const trimmedValue = value.trim()
+    if (trimmedValue === "") {
+      unsetShownForm()
+      return
+    }
     if (treey == null) return
     const parentId = last(parents)
     if (parentId === undefined) return
+    const data = parseData(trimmedValue)
     await treey.createAndAdd(value, parentId)
     unsetShownForm()
     setValue("")
