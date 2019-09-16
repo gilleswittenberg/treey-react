@@ -6,7 +6,6 @@ import "../styles/ItemOverview.sass"
 
 const { utils: { parseFullName } } = treey
 
-
 type Props = {
   fullName: string
 }
@@ -54,14 +53,16 @@ const ItemOverview: React.FC<Props> = ({ fullName }) => {
           <p className="small pre">{ state }</p>
           <h2>events</h2>
           <ul>
-            { item && item.events.map((event: ItemEvent, index: number) => {
+            { item && item.events.reverse().map((event: ItemEvent, index: number) => {
                 const payload = event.payload ? JSON.stringify(event.payload, undefined, 1) : null
                 const showPayload = payload != null
                 const datetime = String(event.datetime)
                 return (
                   <li key={ index }>
                     <strong>{ event.type }</strong><br/>
-                    { showPayload && <><span className="small">{ payload }</span><br/></> }
+                    { showPayload &&
+                      <><span className="small">{ payload }</span><br/></>
+                    }
                     { datetime }
                   </li>
                 )
