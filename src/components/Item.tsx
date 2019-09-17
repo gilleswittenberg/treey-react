@@ -1,4 +1,5 @@
 import React, { useState, useContext, FormEvent } from "react"
+import { DragElementWrapper, DragSourceOptions } from "react-dnd"
 import { Link } from "@reach/router"
 import TreeyContext from "../contexts/TreeyContext"
 import UIContext from "../contexts/UIContext"
@@ -17,10 +18,11 @@ type Props = {
   parents: Ids
   index: Index
   item: TreeItem
+  drag: DragElementWrapper<DragSourceOptions>
   isDragging: boolean
 }
 
-const Item: React.FC<Props> = ({ parents, index, item, isDragging }) => {
+const Item: React.FC<Props> = ({ parents, index, item, drag, isDragging }) => {
 
   const id = getId(item)
   const parentId = last(parents)
@@ -78,7 +80,7 @@ const Item: React.FC<Props> = ({ parents, index, item, isDragging }) => {
 
   return (
     <div className="Item" onClick={ event => event.stopPropagation() }>
-      <div className={ cs("ItemBody", { isHidden: !showItem, showAddButton }) }>
+      <div ref={ drag } className={ cs("ItemBody", { isHidden: !showItem, showAddButton, isDragging }) }>
         <span onClick={ onClick }>
           <ItemData data={ dataString } />
           <Link to={ linkTo } className="info">ⓘ</Link>

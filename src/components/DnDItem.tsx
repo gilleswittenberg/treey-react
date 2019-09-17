@@ -32,6 +32,7 @@ const DnDItem: React.FC<Props> = ({ parents, index, item }) => {
   const ref = useRef<HTMLDivElement>(null)
   const [hoverRegion, setHoverRegion] = useState<HoverRegion>()
 
+  // @TODO: Move to own file, combine with Item.drag
   const [{ isDragging }, drag] = useDrag({
     item: { type: "item", parents, index, id },
     collect: monitor => ({
@@ -88,8 +89,8 @@ const DnDItem: React.FC<Props> = ({ parents, index, item }) => {
         { showPrePlaceholder &&
           <div className="dnd-placeholder"></div>
         }
-        <div ref={ drag } className={ cs({ isHidden: isDragging }) }>
-          <Item parents={ parents } index={ index } item={ item } isDragging={ isDragging } />
+        <div className={ cs({ isHidden: isDragging }) }>
+          <Item parents={ parents } index={ index } item={ item } drag={ drag } isDragging={ isDragging } />
         </div>
         { showPostPlaceholder &&
           <div className="dnd-placeholder"></div>
