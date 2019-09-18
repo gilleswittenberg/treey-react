@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react"
+import React, { useContext } from "react"
 import { DragElementWrapper, DragSourceOptions } from "react-dnd"
 import TreeyContext from "../contexts/TreeyContext"
 import UIContext from "../contexts/UIContext"
@@ -29,33 +29,37 @@ const Item: React.FC<Props> = ({ parents, index, item, drag, isDragging }) => {
   const dataString = stringifyData(data)
   const hasRelations = item.relations.length > 0
 
-  const [isOpened, setIsOpened] = useState(false)
   const { treey } = useContext(TreeyContext)
   const remove = async () => {
     if (treey == null) return
     if (id == null) return
     await treey.remove(id, parentId, index)
   }
-  const { isShownForm, setShownForm, unsetShownForm } = useContext(UIContext)
+  const { isShownForm, setShownForm, unsetShownForm, itemIsOpen, setIsOpen, unsetIsOpen } = useContext(UIContext)
 
+  const isOpen = itemIsOpen(path)
   const isEditing = isShownForm(path)
   const showItem = isDragging || !isEditing
   const showForm = !isDragging && isEditing
-  const showItems = !isDragging && ((isOpened && hasRelations) || isShownForm(path, true))
+  const showItems = !isDragging && ((isOpen && hasRelations) || isShownForm(path, true))
 
   const onClick = () => {
     if (isShownForm(path, true)) unsetShownForm()
     const selection = window.getSelection()
     if (selection && selection.toString() !== "") return
     if (!hasRelations) return
-    setIsOpened(!isOpened)
+    if (!isOpen) return setIsOpen(path)
+    if (isOpen) return unsetIsOpen(path)
   }
   const onClickAdd = () => {
     setShownForm(path, true)
-    setIsOpened(true)
+    setIsOpen(path)
   }
   const onClickEdit = () => setShownForm(path)
-  const onClickDelete = remove
+  const onClickDelete = () => {
+    remove()
+    unsetIsOpen(path)
+  }
   const submit = async (value: string) => {
     unsetShownForm()
     const trimmedValue = value.trim()

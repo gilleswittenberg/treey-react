@@ -11,8 +11,9 @@ type Props = {
 
 const UIProvider: React.FC<Props> = ({ children }) => {
 
+  // shown form
   const [shownForm, set] = useState()
-  const createPath = (parents: Ids, isAdd = false) => {
+  const createPath = (parents: Ids, isAdd = false) : Path => {
     const arr = parents.map(id => createFullName(id))
     return (isAdd ? arr.concat("add") : arr).join("/")
   }
@@ -27,7 +28,30 @@ const UIProvider: React.FC<Props> = ({ children }) => {
     return () => window.removeEventListener("click", unsetShownForm)
   }, [])
 
-  const value = { isShownForm, setShownForm, unsetShownForm }
+  // is opened
+  const [isOpen, setStateIsOpen] = useState<Paths>([])
+  const itemIsOpen = (ids: Ids) => {
+    const path = createPath(ids)
+    return isOpen.includes(path)
+  }
+  const setIsOpen = (ids: Ids) => {
+    if (itemIsOpen(ids)) return
+    const path = createPath(ids)
+    setStateIsOpen(isOpen.concat(path))
+  }
+  const unsetIsOpen = (ids: Ids) => {
+    const path = createPath(ids)
+    setStateIsOpen(isOpen.filter(i => i !== path))
+  }
+
+  const value = {
+    isShownForm,
+    setShownForm,
+    unsetShownForm,
+    itemIsOpen,
+    setIsOpen,
+    unsetIsOpen
+  }
 
   return (
     <UIContext.Provider value={ value }>
