@@ -1,14 +1,12 @@
-import React, { useState, useContext, FormEvent } from "react"
+import React, { useState, useContext } from "react"
 import { DragElementWrapper, DragSourceOptions } from "react-dnd"
-import { Link } from "@reach/router"
 import TreeyContext from "../contexts/TreeyContext"
 import UIContext from "../contexts/UIContext"
+import ItemBody from "./ItemBody"
+import ItemForm from "./ItemForm"
 import Items from "./Items"
-import Button from "./Button"
-import ItemData from "./ItemData"
 import { getId, getPath, getData, stringifyData, parseData } from "../utils/treeItemUtils"
 import last from "../utils/last"
-import basepath from "../utils/basepath"
 import cs from "classnames"
 import { isEqual } from "lodash"
 
@@ -31,7 +29,6 @@ const Item: React.FC<Props> = ({ parents, index, item, drag, isDragging }) => {
   const dataString = stringifyData(data)
   const hasRelations = item.relations.length > 0
 
-  const [value, setValue] = useState(dataString)
   const [isOpened, setIsOpened] = useState(false)
   const { treey } = useContext(TreeyContext)
   const remove = async () => {
@@ -45,9 +42,6 @@ const Item: React.FC<Props> = ({ parents, index, item, drag, isDragging }) => {
   const showItem = isDragging || !isEditing
   const showForm = !isDragging && isEditing
   const showItems = !isDragging && ((isOpened && hasRelations) || isShownForm(path, true))
-  const showAddButton = !hasRelations
-
-  const linkTo = `${ basepath }item/${ item.name }`
 
   const onClick = () => {
     if (isShownForm(path, true)) unsetShownForm()
@@ -62,8 +56,7 @@ const Item: React.FC<Props> = ({ parents, index, item, drag, isDragging }) => {
   }
   const onClickEdit = () => setShownForm(path)
   const onClickDelete = remove
-  const onSubmit = async (event: FormEvent) => {
-    event.preventDefault()
+  const submit = async (value: string) => {
     unsetShownForm()
     const trimmedValue = value.trim()
     if (trimmedValue === "") return remove()
@@ -73,28 +66,24 @@ const Item: React.FC<Props> = ({ parents, index, item, drag, isDragging }) => {
     if (id == null) return
     await treey.update(id, newData)
   }
-  const onChange = (event: FormEvent) => {
-    const value = (event.target as HTMLInputElement).value
-    setValue(value)
-  }
 
   return (
     <div className="Item" onClick={ event => event.stopPropagation() }>
-      <div ref={ drag } className={ cs("ItemBody", { isHidden: !showItem, showAddButton, isDragging }) }>
-        <span onClick={ onClick }>
-          <ItemData data={ dataString } />
-          <Link to={ linkTo } className="info">ⓘ</Link>
-        </span>
-        { showAddButton &&
-          <Button type="ADD" onClick={ onClickAdd } />
-        }
-        <Button type="EDIT" onClick={ onClickEdit } />
-        <Button type="DELETE" onClick={ onClickDelete } />
+      <div className={ cs({ isHidden: !showItem }) }>
+        <ItemBody
+          path={ path }
+          item={ item }
+          drag={ drag }
+          isDragging={ isDragging }
+          onClick={ onClick }
+          onClickAdd={ onClickAdd }
+          onClickEdit={ onClickEdit }
+          onClickDelete={ onClickDelete }
+        />
       </div>
-      <form onSubmit={ onSubmit } className={ cs({ isHidden: !showForm }) }>
-        <input type="text" value={ value } onChange={ onChange } ref={ elem => elem && elem.focus() } />
-        <Button type="EDIT" />
-      </form>
+      <div className={ cs({ isHidden: !showForm }) }>
+        <ItemForm submit={ submit } initialValue={ dataString } />
+      </div>
       <div className={ cs({ isHidden: !showItems }) }>
         <Items parents={ path } items={ item.relations } />
       </div>

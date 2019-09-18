@@ -1,6 +1,7 @@
-import React, { useState, useContext, FormEvent } from "react"
+import React, { useContext } from "react"
 import TreeyContext from "../contexts/TreeyContext"
 import UIContext from "../contexts/UIContext"
+import ItemForm from "./ItemForm"
 import Button from "./Button"
 import last from "../utils/last"
 import { parseData } from "../utils/treeItemUtils"
@@ -13,20 +14,17 @@ type Props = {
 
 const FormAdd: React.FC<Props> = ({ parents }) => {
 
-  const [value, setValue] = useState("")
-  const clearValue = () => setValue("")
-  const { treey } = useContext(TreeyContext)
   const { isShownForm, setShownForm, unsetShownForm } = useContext(UIContext)
+  const { treey } = useContext(TreeyContext)
 
   const showForm = isShownForm(parents, true)
   const showButton = !showForm
 
   const onClick = () => {
-    clearValue()
     setShownForm(parents, true)
   }
-  const onSubmit = async (event: FormEvent) => {
-    event.preventDefault()
+
+  const submit = async (value: string) => {
     unsetShownForm()
     const trimmedValue = value.trim()
     if (trimmedValue === "") return
@@ -35,11 +33,6 @@ const FormAdd: React.FC<Props> = ({ parents }) => {
     if (parentId === undefined) return
     const data = parseData(trimmedValue)
     await treey.createAndAdd(data, parentId)
-    clearValue()
-  }
-  const onChange = (event: FormEvent) => {
-    const value = (event.target as HTMLInputElement).value
-    setValue(value)
   }
 
   return (
@@ -48,10 +41,7 @@ const FormAdd: React.FC<Props> = ({ parents }) => {
         <Button onClick={ onClick } type="ADD" />
       }
       { showForm &&
-        <form onSubmit={ onSubmit }>
-          <input type="text" onChange={ onChange } value={ value } autoFocus />
-          <Button type="ADD" />
-        </form>
+        <ItemForm submit={ submit } />
       }
     </div>
   )
