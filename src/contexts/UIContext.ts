@@ -7,6 +7,9 @@ type Value = {
   itemIsOpen (ids: Ids) : boolean
   setIsOpen (ids: Ids) : void
   unsetIsOpen (ids: Ids) : void
+  itemIsDragging (ids: Ids) : boolean
+  setIsDragging (ids: Ids) : void
+  unsetIsDragging () : void
 }
 
 const unimplemented = () => { throw new Error ("UIContext not implemented") }
@@ -17,7 +20,10 @@ const value = {
   unsetShownForm: unimplemented,
   itemIsOpen: unimplemented,
   setIsOpen: unimplemented,
-  unsetIsOpen: unimplemented
+  unsetIsOpen: unimplemented,
+  itemIsDragging: unimplemented,
+  setIsDragging: unimplemented,
+  unsetIsDragging: unimplemented
 } as Value
 
 const UIContext = createContext(value)

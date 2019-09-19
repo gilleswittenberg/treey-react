@@ -1,6 +1,7 @@
 import React, { useContext, useRef, useState } from "react"
 import { useDrag, useDrop } from 'react-dnd'
 import TreeyContext from "../contexts/TreeyContext"
+import UIContext from "../contexts/UIContext"
 import Item from "./Item"
 import { getId, getName } from "../utils/treeItemUtils"
 import last from "../utils/last"
@@ -27,14 +28,18 @@ const DnDItem: React.FC<Props> = ({ parents, index, item }) => {
 
   const id = getId(item)
   const name = getName(id, parents)
+  const path = id ? parents.concat(id) : parents
 
   const { treey } = useContext(TreeyContext)
+  const { setIsDragging, unsetIsDragging } = useContext(UIContext)
   const ref = useRef<HTMLDivElement>(null)
   const [hoverRegion, setHoverRegion] = useState<HoverRegion>()
 
   // @TODO: Move to own file, combine with Item.drag
   const [{ isDragging }, drag] = useDrag({
     item: { type: "item", parents, index, id },
+    begin: () => setIsDragging(path),
+    end: () => unsetIsDragging(),
     collect: monitor => ({
       isDragging: monitor.isDragging()
     })
@@ -90,7 +95,7 @@ const DnDItem: React.FC<Props> = ({ parents, index, item }) => {
           <div className="dnd-placeholder"></div>
         }
         <div className={ cs({ isHidden: isDragging }) }>
-          <Item parents={ parents } index={ index } item={ item } drag={ drag } isDragging={ isDragging } />
+          <Item parents={ parents } index={ index } item={ item } drag={ drag } />
         </div>
         { showPostPlaceholder &&
           <div className="dnd-placeholder"></div>

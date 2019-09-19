@@ -17,10 +17,9 @@ type Props = {
   index: Index
   item: TreeItem
   drag: DragElementWrapper<DragSourceOptions>
-  isDragging: boolean
 }
 
-const Item: React.FC<Props> = ({ parents, index, item, drag, isDragging }) => {
+const Item: React.FC<Props> = ({ parents, index, item, drag }) => {
 
   const id = getId(item)
   const parentId = last(parents)
@@ -35,10 +34,11 @@ const Item: React.FC<Props> = ({ parents, index, item, drag, isDragging }) => {
     if (id == null) return
     await treey.remove(id, parentId, index)
   }
-  const { isShownForm, setShownForm, unsetShownForm, itemIsOpen, setIsOpen, unsetIsOpen } = useContext(UIContext)
+  const { isShownForm, setShownForm, unsetShownForm, itemIsOpen, setIsOpen, unsetIsOpen, itemIsDragging } = useContext(UIContext)
 
   const isOpen = itemIsOpen(path)
   const isEditing = isShownForm(path)
+  const isDragging = itemIsDragging(path)
   const showItem = isDragging || !isEditing
   const showForm = !isDragging && isEditing
   const showItems = !isDragging && ((isOpen && hasRelations) || isShownForm(path, true))

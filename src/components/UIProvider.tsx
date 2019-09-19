@@ -12,7 +12,7 @@ type Props = {
 const UIProvider: React.FC<Props> = ({ children }) => {
 
   // shown form
-  const [shownForm, set] = useState()
+  const [shownForm, set] = useState<Path>()
   const createPath = (parents: Ids, isAdd = false) : Path => {
     const arr = parents.map(id => createFullName(id))
     return (isAdd ? arr.concat("add") : arr).join("/")
@@ -44,13 +44,23 @@ const UIProvider: React.FC<Props> = ({ children }) => {
     setStateIsOpen(isOpen.filter(i => i !== path))
   }
 
+  // is dragging
+
+  const [isDragging, setStateIsDragging] = useState<Path>()
+  const itemIsDragging = (ids: Ids) => isDragging === createPath(ids)
+  const setIsDragging = (ids: Ids) => setStateIsDragging(createPath(ids))
+  const unsetIsDragging = () => setStateIsDragging(undefined)
+
   const value = {
     isShownForm,
     setShownForm,
     unsetShownForm,
     itemIsOpen,
     setIsOpen,
-    unsetIsOpen
+    unsetIsOpen,
+    itemIsDragging,
+    setIsDragging,
+    unsetIsDragging
   }
 
   return (
