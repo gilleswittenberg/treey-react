@@ -5,7 +5,7 @@ import Item from "./Item"
 import { getId, getName } from "../utils/treeItemUtils"
 import last from "../utils/last"
 
-import "../styles/DnDItem.sass"
+import "../styles/ItemDrop.sass"
 
 type Props = {
   parents: Ids
@@ -22,7 +22,7 @@ type DraggableData = {
   id: Id
 }
 
-const DnDItem: React.FC<Props> = ({ parents, index, item }) => {
+const ItemDrop: React.FC<Props> = ({ parents, index, item }) => {
 
   const id = getId(item)
   const name = getName(id, parents)
@@ -91,4 +91,4 @@ const DnDItem: React.FC<Props> = ({ parents, index, item }) => {
   )
 }
 
-export default DnDItem
+export default ItemDrop
