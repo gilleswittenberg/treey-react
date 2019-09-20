@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import { useDrag } from 'react-dnd'
 import { Link } from "@reach/router"
 import cs from "classnames"
@@ -22,8 +22,12 @@ const ItemBody: React.FC<Props> = ({ path, index, item, onClick, onClickAdd, onC
 
   const id = getId(item)
   const parents = path.slice(0, -1)
-  const { /*itemIsDragging, */ setIsDragging, unsetIsDragging } = useContext(UIContext)
-  //const isDraggingUIContext = itemIsDragging(path)
+  const { itemIsDragging, setIsDragging, unsetIsDragging } = useContext(UIContext)
+  const isDraggingUIContext = itemIsDragging(path)
+
+  const [isHovered, setIsHovered] = useState(false)
+  const onMouseEnter = () => setIsHovered(true)
+  const onMouseLeave = () => setIsHovered(false)
 
   const [{ isDragging }, drag] = useDrag({
     item: { type: "item", parents, index, id },
@@ -35,12 +39,18 @@ const ItemBody: React.FC<Props> = ({ path, index, item, onClick, onClickAdd, onC
   })
 
   const showAddButton = item.relations.length === 0
+  const showButtons = isHovered && !isDraggingUIContext
+  const isHidden = isDragging
   const data = getData(item)
   const dataString = stringifyData(data)
   const linkTo = `${ basepath }item/${ item.name }`
 
   return (
-    <div ref={ drag } className={ cs("ItemBody", { showAddButton, isHidden: isDragging }) }>
+    <div
+      ref={ drag }
+      className={ cs("ItemBody", { showAddButton, showButtons, isHidden }) }
+      onMouseEnter={ onMouseEnter }
+      onMouseLeave={ onMouseLeave }>
       <span onClick={ onClick }>
         <ItemData data={ dataString } />
         <Link to={ linkTo } className="info">ⓘ</Link>
