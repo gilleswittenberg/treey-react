@@ -19,5 +19,12 @@ declare type Treey = {
   createAndAdd (data: Data, parentId: Id) : void
   update (id: Id, data: Data) : void
   remove (id: Id, parentId: Id, index: Index) : void
-  move (id: Id, oldParentId: Id, parentId: Id, oldIndex: Index, index: Index) : void
+  move (id: Id, oldParentId: Id, parentId: Id, oldIndex?: Index, index?: Index) : void
+}
+
+declare type DraggableData = {
+  type: string,
+  parents: Ids,
+  index: Index,
+  id: Id
 }

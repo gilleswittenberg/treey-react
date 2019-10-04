@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 import TreeyContext from "../contexts/TreeyContext"
 import UIContext from "../contexts/UIContext"
-import ItemBody from "./ItemBody"
+import ItemDnD from "./ItemDnD"
 import ItemForm from "./ItemForm"
 import Items from "./Items"
 import { getId, getPath, getData, stringifyData, parseData } from "../utils/treeItemUtils"
@@ -72,7 +72,8 @@ const Item: React.FC<Props> = ({ parents, index, item }) => {
   return (
     <div className={ cs("Item") } onClick={ event => event.stopPropagation() }>
       <div className={ cs({ isHidden: !showItem }) }>
-        <ItemBody
+        <ItemDnD
+          parents={ parents }
           path={ path }
           index={ index }
           item={ item }
@@ -82,7 +83,7 @@ const Item: React.FC<Props> = ({ parents, index, item }) => {
           onClickDelete={ onClickDelete }
         />
       </div>
-      <div className={ cs({ isHidden: !showForm }) }>
+      <div className={ cs("ItemFormWrap", { isHidden: !showForm }) }>
         <ItemForm submit={ submit } initialValue={ dataString } />
       </div>
       <div className={ cs({ isHidden: !showItems }) }>

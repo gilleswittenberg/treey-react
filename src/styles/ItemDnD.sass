@@ -1,0 +1,16 @@
+@import colors
+@import global
+
+.dnd-placeholder
+  $d: $bottomSpacing / 3
+  height: $d
+  padding: $d 0
+  border-radius: $borderRadius
+  div
+    height: $d
+  &.isShown
+    div
+      background-color: black
+
+.dnd-placeholder-child
+  transform: translateX(15px)

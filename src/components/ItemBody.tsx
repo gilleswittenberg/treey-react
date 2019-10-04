@@ -1,65 +1,107 @@
 import React, { useContext, useState } from "react"
-import { useDrag } from 'react-dnd'
+import { useDrag, useDrop } from "react-dnd"
 import { Link } from "@reach/router"
 import cs from "classnames"
+import TreeyContext from "../contexts/TreeyContext"
 import UIContext from "../contexts/UIContext"
 import ItemData from "./ItemData"
 import Button from "./Button"
 import basepath from "../utils/basepath"
-import { getId, getData, stringifyData } from "../utils/treeItemUtils"
+import last from "../utils/last"
+import { getId, getData, stringifyData, getName } from "../utils/treeItemUtils"
+import defer from "../utils/defer"
 
 type Props = {
   path: Ids
   index: Index
   item: TreeItem
-  onClick: any
-  onClickAdd: any
-  onClickEdit: any
-  onClickDelete: any
+  isOver: boolean
+  onClick: () => void
+  onClickAdd: () => void
+  onClickEdit: () => void
+  onClickDelete: () => void
 }
 
-const ItemBody: React.FC<Props> = ({ path, index, item, onClick, onClickAdd, onClickEdit, onClickDelete }) => {
+const ItemBody: React.FC<Props> = ({ path, index, item, isOver, onClick, onClickAdd, onClickEdit, onClickDelete }) => {
 
   const id = getId(item)
+  const dropId = id
   const parents = path.slice(0, -1)
-  const { itemIsDragging, setIsDragging, unsetIsDragging } = useContext(UIContext)
-  const isDraggingUIContext = itemIsDragging(path)
+  const name = getName(id, parents)
+  const { isDragging: isDraggingGlobal, setIsDragging, unsetIsDragging, setIsOpen } = useContext(UIContext)
+  const { treey } = useContext(TreeyContext)
+  const isDraggingUIContext = isDraggingGlobal()
 
   const [isHovered, setIsHovered] = useState(false)
   const onMouseEnter = () => setIsHovered(true)
   const onMouseLeave = () => setIsHovered(false)
 
   const [{ isDragging }, drag] = useDrag({
-    item: { type: "item", parents, index, id },
-    begin: () => setIsDragging(path),
+    item: { type: "item", parents, index, id, name },
+    begin: () => defer(() => setIsDragging(path)),
     end: () => unsetIsDragging(),
     collect: monitor => ({
       isDragging: monitor.isDragging()
     })
   })
 
-  const showAddButton = item.relations.length === 0
-  const showButtons = isHovered && !isDraggingUIContext
-  const isHidden = isDragging
+  const hasRelations = item.relations.length > 0
+  const showAddButton = !hasRelations
+  const showButtons = isHovered && !isDragging && !isDraggingUIContext
   const data = getData(item)
   const dataString = stringifyData(data)
   const linkTo = `${ basepath }item/${ item.name }`
 
+  const [{ isOver: isOverDeep }, drop] = useDrop({
+    accept: "item",
+    drop: async (item, monitor) => {
+
+      const draggableData = item as DraggableData
+      const id = draggableData.id
+      const oldParentId = last(draggableData.parents)
+      const oldIndex = draggableData.index
+      const parentId = dropId
+      if (parentId == null) return
+
+      // guard for null treey context
+      if (treey == null) return
+      await treey.move(id, oldParentId, parentId, oldIndex)
+      setIsOpen(path)
+    },
+    collect: monitor => ({
+      isOver: monitor.isOver({ shallow: true }),
+      canDrop: monitor.canDrop()
+    })
+  })
+
+  const isHidden = isDragging
+  const showDrop = (isOver && !hasRelations) || isOverDeep
+  const showDnDPlaceHolderChild = isOverDeep
+
   return (
-    <div
-      ref={ drag }
-      className={ cs("ItemBody", { showAddButton, showButtons, isHidden }) }
-      onMouseEnter={ onMouseEnter }
-      onMouseLeave={ onMouseLeave }>
-      <span onClick={ onClick }>
-        <ItemData data={ dataString } />
-        <Link to={ linkTo } className="info">ⓘ</Link>
-      </span>
-      { showAddButton &&
-        <Button type="ADD" onClick={ onClickAdd } />
-      }
-      <Button type="EDIT" onClick={ onClickEdit } />
-      <Button type="DELETE" onClick={ onClickDelete } />
+    <div className={ cs("ItemBodyWrap", { isHidden }) }>
+      <div
+        ref={ drag }
+        className={ cs("ItemBody", { showAddButton, showButtons, showDrop }) }
+        onMouseEnter={ onMouseEnter }
+        onMouseLeave={ onMouseLeave }
+        >
+        <span onClick={ onClick }>
+          <ItemData data={ dataString } />
+          <Link to={ linkTo } className="info">ⓘ</Link>
+        </span>
+        { showDrop &&
+          <div ref={ drop } className="ItemAddDrop">
+            <Button type="ADD" />
+          </div>
+        }
+        { showAddButton &&
+          <Button type="ADD" onClick={ onClickAdd } />
+        }
+        <Button type="EDIT" onClick={ onClickEdit } />
+        <Button type="DELETE" onClick={ onClickDelete } />
+      </div>
+      <div className={ cs("dnd-placeholder", "dnd-placeholder-child", { isShown: showDnDPlaceHolderChild }) }><div></div></div>
     </div>
   )
 }

@@ -1,5 +1,6 @@
-import React from "react"
-import ItemDrop from "./ItemDrop"
+import React, { useContext } from "react"
+import UIContext from "../contexts/UIContext"
+import Item from "./Item"
 import FormAdd from "./FormAdd"
 
 import "../styles/Items.sass"
@@ -11,7 +12,10 @@ type Props = {
 
 const Items: React.FC<Props> = ({ parents, items }) => {
 
+  const { isDragging } = useContext(UIContext)
+
   const showItems = items.length > 0
+  const showFormAdd = !isDragging()
 
   return (
     <div className="Items">
@@ -19,13 +23,15 @@ const Items: React.FC<Props> = ({ parents, items }) => {
         <ul>
           { items.map((item, index) => (
               <li key={ item.name }>
-                <ItemDrop parents={ parents } index={ index } item={ item } />
+                <Item parents={ parents } index={ index } item={ item } />
               </li>
             ))
           }
         </ul>
       }
-      <FormAdd parents={ parents } />
+      { showFormAdd &&
+        <FormAdd parents={ parents } />
+      }
     </div>
   )
 }

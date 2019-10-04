@@ -47,6 +47,7 @@ const UIProvider: React.FC<Props> = ({ children }) => {
   // is dragging
 
   const [isDragging, setStateIsDragging] = useState<Path>()
+  const anyItemIsDragging = () => isDragging !== undefined
   const itemIsDragging = (ids: Ids) => isDragging === createPath(ids)
   const setIsDragging = (ids: Ids) => setStateIsDragging(createPath(ids))
   const unsetIsDragging = () => setStateIsDragging(undefined)
@@ -58,6 +59,7 @@ const UIProvider: React.FC<Props> = ({ children }) => {
     itemIsOpen,
     setIsOpen,
     unsetIsOpen,
+    isDragging: anyItemIsDragging,
     itemIsDragging,
     setIsDragging,
     unsetIsDragging

@@ -7,6 +7,7 @@ type Value = {
   itemIsOpen (ids: Ids) : boolean
   setIsOpen (ids: Ids) : void
   unsetIsOpen (ids: Ids) : void
+  isDragging () : boolean
   itemIsDragging (ids: Ids) : boolean
   setIsDragging (ids: Ids) : void
   unsetIsDragging () : void
@@ -21,6 +22,7 @@ const value = {
   itemIsOpen: unimplemented,
   setIsOpen: unimplemented,
   unsetIsOpen: unimplemented,
+  isDragging: unimplemented,
   itemIsDragging: unimplemented,
   setIsDragging: unimplemented,
   unsetIsDragging: unimplemented
