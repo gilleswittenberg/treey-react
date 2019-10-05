@@ -74,12 +74,12 @@ const ItemBody: React.FC<Props> = ({ path, index, item, isOver, onClick, onClick
     })
   })
 
-  const isHidden = isDragging
+  const isDisabled = isDragging
   const showDrop = (isOver && !hasRelations) || isOverDeep
   const showDnDPlaceHolderChild = isOverDeep
 
   return (
-    <div className={ cs("ItemBodyWrap", { isHidden }) }>
+    <div className={ cs("ItemBodyWrap", { isDisabled }) }>
       <div
         ref={ drag }
         className={ cs("ItemBody", { showAddButton, showButtons, showDrop }) }
