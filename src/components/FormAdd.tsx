@@ -5,20 +5,22 @@ import ItemForm from "./ItemForm"
 import Button from "./Button"
 import last from "../utils/last"
 import { parseData } from "../utils/treeItemUtils"
+import cs from "classnames"
 
 import "../styles/FormAdd.sass"
 
 type Props = {
   parents: Ids
+  isDisabled: boolean
 }
 
-const FormAdd: React.FC<Props> = ({ parents }) => {
+const FormAdd: React.FC<Props> = ({ parents, isDisabled }) => {
 
-  const { isShownForm, setShownForm, unsetShownForm } = useContext(UIContext)
+  const { isDragging, isShownForm, setShownForm, unsetShownForm } = useContext(UIContext)
   const { treey } = useContext(TreeyContext)
 
   const showForm = isShownForm(parents, true)
-  const showButton = !showForm
+  const show = isDisabled || !showForm 
 
   const onClick = () => {
     setShownForm(parents, true)
@@ -36,8 +38,8 @@ const FormAdd: React.FC<Props> = ({ parents }) => {
   }
 
   return (
-    <div className="FormAdd" onClick={ event => event.stopPropagation() }>
-      { showButton &&
+    <div className={ cs("FormAdd", { isDisabled }) } onClick={ event => event.stopPropagation() }>
+      { show &&
         <Button onClick={ onClick } type="ADD" />
       }
       { showForm &&

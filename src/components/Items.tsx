@@ -15,7 +15,7 @@ const Items: React.FC<Props> = ({ parents, items }) => {
   const { isDragging } = useContext(UIContext)
 
   const showItems = items.length > 0
-  const showFormAdd = !isDragging()
+  const isDisabled = isDragging()
 
   return (
     <div className="Items">
@@ -29,9 +29,7 @@ const Items: React.FC<Props> = ({ parents, items }) => {
           }
         </ul>
       }
-      { showFormAdd &&
-        <FormAdd parents={ parents } />
-      }
+      <FormAdd parents={ parents } isDisabled={ isDisabled } />
     </div>
   )
 }
