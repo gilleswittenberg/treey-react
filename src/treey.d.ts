@@ -8,7 +8,22 @@ declare type Id = {
 declare type Ids = Id[]
 declare type Data = any
 declare type Index = number
-declare type TreeItem = any
+type State = {
+  readonly ids?: Ids
+  readonly schema?: Schema
+  readonly data?: Data
+  readonly relations?: Ids
+}
+declare type TreeItem = {
+  readonly state: State
+  readonly events: any[]
+  readonly relations: TreeItems
+  readonly name: FullName
+  readonly isCyclic: boolean
+  readonly isKnown: boolean
+  readonly isDestroyed: boolean
+  readonly path?: Path
+}
 declare type TreeItems = TreeItem[]
 declare type ItemEvent = any
 declare type Path = string
@@ -28,3 +43,5 @@ declare type DraggableData = {
   index: Index,
   id: Id
 }
+
+declare type Direction = "next" | "prev"

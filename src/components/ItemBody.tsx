@@ -28,9 +28,10 @@ const ItemBody: React.FC<Props> = ({ path, index, item, isOver, onClick, onClick
   const dropId = id
   const parents = path.slice(0, -1)
   const name = getName(id, parents)
-  const { isDragging: isDraggingGlobal, setIsDragging, unsetIsDragging, setIsOpen } = useContext(UIContext)
+  const { isDragging: isDraggingGlobal, setIsDragging, unsetIsDragging, setIsOpen, isActive: itemIsActive } = useContext(UIContext)
   const { treey } = useContext(TreeyContext)
   const isDraggingUIContext = isDraggingGlobal()
+  const isActive = itemIsActive(path)
 
   const [isHovered, setIsHovered] = useState(false)
   const onMouseEnter = () => setIsHovered(true)
@@ -79,7 +80,7 @@ const ItemBody: React.FC<Props> = ({ path, index, item, isOver, onClick, onClick
   const showDnDPlaceHolderChild = isOverDeep
 
   return (
-    <div className={ cs("ItemBodyWrap", { isDisabled }) }>
+    <div className={ cs("ItemBodyWrap", { isActive, isDisabled }) }>
       <div
         ref={ drag }
         className={ cs("ItemBody", { showAddButton, showButtons, showDrop }) }
