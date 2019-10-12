@@ -1,19 +1,18 @@
 import { createContext } from "react"
 
 type Value = {
-  isShownForm (path: Path) : boolean
+  isShownForm (path?: Path) : boolean
   setShownForm (path: Path) : void
   unsetShownForm () : void
-  itemIsOpen (path: Path) : boolean
-  setIsOpen (path: Path) : void
-  unsetIsOpen (path: Path) : void
-  isDragging () : boolean
-  itemIsDragging (path: Path) : boolean
-  setIsDragging (path: Path) : void
-  unsetIsDragging () : void
+  isOpen (path: Path) : boolean
+  setOpen (path: Path) : void
+  unsetOpen (path: Path) : void
+  isDragging (path?: Path) : boolean
+  setDragging (path: Path) : void
+  unsetDragging () : void
+  isActivePath: Path | undefined
   isActive (path?: Path) : boolean
-  setIsActive (direction?: Direction) : void
-  activeItem: Path | undefined
+  changeActive (direction?: Direction) : void
 }
 
 const unimplemented = () => { throw new Error ("UIContext not implemented") }
@@ -22,16 +21,15 @@ const value = {
   isShownForm: unimplemented,
   setShownForm: unimplemented,
   unsetShownForm: unimplemented,
-  itemIsOpen: unimplemented,
-  setIsOpen: unimplemented,
-  unsetIsOpen: unimplemented,
+  isOpen: unimplemented,
+  setOpen: unimplemented,
+  unsetOpen: unimplemented,
   isDragging: unimplemented,
-  itemIsDragging: unimplemented,
-  setIsDragging: unimplemented,
-  unsetIsDragging: unimplemented,
+  setDragging: unimplemented,
+  unsetDragging: unimplemented,
+  isActivePath: undefined,
   isActive: unimplemented,
-  setIsActive: unimplemented,
-  activeItem: undefined
+  changeActive: unimplemented
 } as Value
 
 const UIContext = createContext(value)

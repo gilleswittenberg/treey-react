@@ -21,10 +21,8 @@ const Tree: React.FC<Props> = ({ tree, treey }) => {
   const path = hasTree ? createFullName(id!) : undefined
 
   // set first item active
-  const { isActive, setIsActive } = useContext(UIContext)
-  if (hasTree && !isActive()) {
-    setIsActive()
-  }
+  const { isActive, changeActive } = useContext(UIContext)
+  if (hasTree && isActive() === false) changeActive()
 
   return (
     <div className="Tree">

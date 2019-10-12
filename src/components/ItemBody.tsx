@@ -26,7 +26,7 @@ const ItemBody: React.FC<Props> = ({ path, parent, index, item, isOver, onClick,
 
   const id = getId(item)
   const dropId = id
-  const { isDragging: isDraggingGlobal, setIsDragging, unsetIsDragging, setIsOpen, isActive: itemIsActive } = useContext(UIContext)
+  const { isDragging: isDraggingGlobal, setDragging, unsetDragging, setOpen, isActive: itemIsActive } = useContext(UIContext)
   const { treey } = useContext(TreeyContext)
   const isDraggingUIContext = isDraggingGlobal()
   const isActive = itemIsActive(path)
@@ -37,8 +37,8 @@ const ItemBody: React.FC<Props> = ({ path, parent, index, item, isOver, onClick,
 
   const [{ isDragging }, drag] = useDrag({
     item: { type: "item", parent, index, id, path },
-    begin: () => defer(() => setIsDragging(path)),
-    end: () => unsetIsDragging(),
+    begin: () => defer(() => setDragging(path)),
+    end: () => unsetDragging(),
     collect: monitor => ({
       isDragging: monitor.isDragging()
     })
@@ -65,7 +65,7 @@ const ItemBody: React.FC<Props> = ({ path, parent, index, item, isOver, onClick,
       // guard for null treey context
       if (treey == null) return
       await treey.move(id, oldParentId, parentId, oldIndex)
-      setIsOpen(path)
+      setOpen(path)
     },
     collect: monitor => ({
       isOver: monitor.isOver({ shallow: true }),

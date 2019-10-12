@@ -32,7 +32,7 @@ const Item: React.FC<Props> = ({ path: parentPath, parent, index, item }) => {
     if (id == null) return
     await treey.remove(id, parent, index)
   }
-  const { isShownForm, setShownForm, unsetShownForm, itemIsOpen, setIsOpen, unsetIsOpen, itemIsDragging } = useContext(UIContext)
+  const { isShownForm, setShownForm, unsetShownForm, isOpen: itemIsOpen, setOpen, unsetOpen, isDragging: itemIsDragging } = useContext(UIContext)
 
   const isOpen = itemIsOpen(path)
   const isEditing = isShownForm(path)
@@ -46,17 +46,17 @@ const Item: React.FC<Props> = ({ path: parentPath, parent, index, item }) => {
     const selection = window.getSelection()
     if (selection && selection.toString() !== "") return
     if (!hasRelations) return
-    if (!isOpen) return setIsOpen(path)
-    if (isOpen) return unsetIsOpen(path)
+    if (!isOpen) return setOpen(path)
+    if (isOpen) return unsetOpen(path)
   }
   const onClickAdd = () => {
     setShownForm(pathAdd)
-    setIsOpen(path)
+    setOpen(path)
   }
   const onClickEdit = () => setShownForm(path)
   const onClickDelete = () => {
     remove()
-    unsetIsOpen(path)
+    unsetOpen(path)
   }
   const submit = async (value: string) => {
     unsetShownForm()
