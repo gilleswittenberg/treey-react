@@ -7,12 +7,12 @@ import UIContext from "../contexts/UIContext"
 import ItemData from "./ItemData"
 import Button from "./Button"
 import basepath from "../utils/basepath"
-import last from "../utils/last"
-import { getId, getData, stringifyData, getName } from "../utils/treeItemUtils"
+import { getId, getData, stringifyData } from "../utils/treeItemUtils"
 import defer from "../utils/defer"
 
 type Props = {
-  path: Ids
+  path: Path
+  parent: Id
   index: Index
   item: TreeItem
   isOver: boolean
@@ -22,12 +22,10 @@ type Props = {
   onClickDelete: () => void
 }
 
-const ItemBody: React.FC<Props> = ({ path, index, item, isOver, onClick, onClickAdd, onClickEdit, onClickDelete }) => {
+const ItemBody: React.FC<Props> = ({ path, parent, index, item, isOver, onClick, onClickAdd, onClickEdit, onClickDelete }) => {
 
   const id = getId(item)
   const dropId = id
-  const parents = path.slice(0, -1)
-  const name = getName(id, parents)
   const { isDragging: isDraggingGlobal, setIsDragging, unsetIsDragging, setIsOpen, isActive: itemIsActive } = useContext(UIContext)
   const { treey } = useContext(TreeyContext)
   const isDraggingUIContext = isDraggingGlobal()
@@ -38,7 +36,7 @@ const ItemBody: React.FC<Props> = ({ path, index, item, isOver, onClick, onClick
   const onMouseLeave = () => setIsHovered(false)
 
   const [{ isDragging }, drag] = useDrag({
-    item: { type: "item", parents, index, id, name },
+    item: { type: "item", parent, index, id, path },
     begin: () => defer(() => setIsDragging(path)),
     end: () => unsetIsDragging(),
     collect: monitor => ({
@@ -59,7 +57,7 @@ const ItemBody: React.FC<Props> = ({ path, index, item, isOver, onClick, onClick
 
       const draggableData = item as DraggableData
       const id = draggableData.id
-      const oldParentId = last(draggableData.parents)
+      const oldParentId = draggableData.parent
       const oldIndex = draggableData.index
       const parentId = dropId
       if (parentId == null) return

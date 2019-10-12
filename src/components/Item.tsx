@@ -4,24 +4,24 @@ import UIContext from "../contexts/UIContext"
 import ItemDnD from "./ItemDnD"
 import ItemForm from "./ItemForm"
 import Items from "./Items"
-import { getId, getPath, getData, stringifyData, parseData } from "../utils/treeItemUtils"
-import last from "../utils/last"
+import { getId, getData, stringifyData, parseData, createFullName } from "../utils/treeItemUtils"
 import cs from "classnames"
 import { isEqual } from "lodash"
 
 import "../styles/Item.sass"
 
 type Props = {
-  parents: Ids
+  path: Path
+  parent: Id
   index: Index
   item: TreeItem
 }
 
-const Item: React.FC<Props> = ({ parents, index, item }) => {
+const Item: React.FC<Props> = ({ path: parentPath, parent, index, item }) => {
 
-  const id = getId(item)
-  const parentId = last(parents)
-  const path = getPath(id, parents)
+  const id = getId(item)!
+  const path = `${ parentPath }/${ createFullName(id) }`
+  const pathAdd = `${ path }/add`
   const data = getData(item)
   const dataString = stringifyData(data)
   const hasRelations = item.relations.length > 0
@@ -30,7 +30,7 @@ const Item: React.FC<Props> = ({ parents, index, item }) => {
   const remove = async () => {
     if (treey == null) return
     if (id == null) return
-    await treey.remove(id, parentId, index)
+    await treey.remove(id, parent, index)
   }
   const { isShownForm, setShownForm, unsetShownForm, itemIsOpen, setIsOpen, unsetIsOpen, itemIsDragging } = useContext(UIContext)
 
@@ -39,10 +39,10 @@ const Item: React.FC<Props> = ({ parents, index, item }) => {
   const isDragging = itemIsDragging(path)
   const showItem = isDragging || !isEditing
   const showForm = !isDragging && isEditing
-  const showItems = !isDragging && ((isOpen && hasRelations) || isShownForm(path, true))
+  const showItems = !isDragging && ((isOpen && hasRelations) || isShownForm(pathAdd))
 
   const onClick = () => {
-    if (isShownForm(path, true)) unsetShownForm()
+    if (isShownForm(pathAdd)) unsetShownForm()
     const selection = window.getSelection()
     if (selection && selection.toString() !== "") return
     if (!hasRelations) return
@@ -50,7 +50,7 @@ const Item: React.FC<Props> = ({ parents, index, item }) => {
     if (isOpen) return unsetIsOpen(path)
   }
   const onClickAdd = () => {
-    setShownForm(path, true)
+    setShownForm(pathAdd)
     setIsOpen(path)
   }
   const onClickEdit = () => setShownForm(path)
@@ -73,7 +73,7 @@ const Item: React.FC<Props> = ({ parents, index, item }) => {
     <div className={ cs("Item") } onClick={ event => event.stopPropagation() }>
       <div className={ cs({ isHidden: !showItem }) }>
         <ItemDnD
-          parents={ parents }
+          parent={ parent }
           path={ path }
           index={ index }
           item={ item }
@@ -87,7 +87,7 @@ const Item: React.FC<Props> = ({ parents, index, item }) => {
         <ItemForm submit={ submit } initialValue={ dataString } />
       </div>
       <div className={ cs({ isHidden: !showItems }) }>
-        <Items parents={ path } items={ item.relations } />
+        <Items parent={ id } path={ path } items={ item.relations } />
       </div>
     </div>
   )

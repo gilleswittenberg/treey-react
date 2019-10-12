@@ -3,27 +3,28 @@ import TreeyContext from "../contexts/TreeyContext"
 import UIContext from "../contexts/UIContext"
 import ItemForm from "./ItemForm"
 import Button from "./Button"
-import last from "../utils/last"
 import { parseData } from "../utils/treeItemUtils"
 import cs from "classnames"
 
 import "../styles/FormAdd.sass"
 
 type Props = {
-  parents: Ids
+  path: Path
+  parent: Id
   isDisabled: boolean
 }
 
-const FormAdd: React.FC<Props> = ({ parents, isDisabled }) => {
+const FormAdd: React.FC<Props> = ({ path: parentPath, parent, isDisabled }) => {
 
-  const { isDragging, isShownForm, setShownForm, unsetShownForm } = useContext(UIContext)
+  const path = `${ parentPath }/add`
+  const { isShownForm, setShownForm, unsetShownForm } = useContext(UIContext)
   const { treey } = useContext(TreeyContext)
 
-  const showForm = isShownForm(parents, true)
-  const show = isDisabled || !showForm 
+  const showForm = isShownForm(path)
+  const show = isDisabled || !showForm
 
   const onClick = () => {
-    setShownForm(parents, true)
+    setShownForm(path)
   }
 
   const submit = async (value: string) => {
@@ -31,10 +32,8 @@ const FormAdd: React.FC<Props> = ({ parents, isDisabled }) => {
     const trimmedValue = value.trim()
     if (trimmedValue === "") return
     if (treey === null) return
-    const parentId = last(parents)
-    if (parentId === undefined) return
     const data = parseData(trimmedValue)
-    await treey.createAndAdd(data, parentId)
+    await treey.createAndAdd(data, parent)
   }
 
   return (

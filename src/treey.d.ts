@@ -38,10 +38,11 @@ declare type Treey = {
 }
 
 declare type DraggableData = {
-  type: string,
-  parents: Ids,
-  index: Index,
+  type: string
+  parent: Id
+  index: Index
   id: Id
+  path: Path
 }
 
 declare type Direction = "next" | "prev"

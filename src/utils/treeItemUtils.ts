@@ -17,3 +17,4 @@ export const parseData = (str: string) : Data => {
     return str
   }
 }
+export { createFullName }

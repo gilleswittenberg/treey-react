@@ -3,7 +3,7 @@ import Items from "./Items"
 import { DndProvider } from "react-dnd"
 import HTML5Backend from "react-dnd-html5-backend"
 import UIContext from "../contexts/UIContext"
-import { getId } from "../utils/treeItemUtils"
+import { getId, createFullName } from "../utils/treeItemUtils"
 
 import "../styles/Tree.sass"
 
@@ -14,20 +14,23 @@ type Props = {
 
 const Tree: React.FC<Props> = ({ tree, treey }) => {
 
-  const items = tree && tree.relations
-  const id = getId(tree)!
-  const parents = [id]
+  const hasTree = tree !== undefined
+  const items = hasTree ? tree.relations : undefined
+  const id = hasTree ? getId(tree)! : undefined
+  const parent = id
+  const path = hasTree ? createFullName(id!) : undefined
 
+  // set first item active
   const { isActive, setIsActive } = useContext(UIContext)
-  if (items && !isActive()) {
+  if (hasTree && !isActive()) {
     setIsActive()
   }
 
   return (
     <div className="Tree">
-      { id &&
+      { hasTree &&
         <DndProvider backend={ HTML5Backend }>
-          <Items parents={ parents } items={ items } />
+          <Items path={ path! } parent={ parent! } items={ items! } />
         </DndProvider>
       }
     </div>

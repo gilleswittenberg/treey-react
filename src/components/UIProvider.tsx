@@ -1,13 +1,10 @@
 import React, { ReactNode, useState, useEffect } from "react"
 import UIContext from '../contexts/UIContext'
 import useEscListener from "../hooks/useEscListener"
-import treey from "treey"
 import useTreey from "../hooks/useTreey"
 import pruneTree from "../utils/tree/pruneTree"
 import flattenTree from "../utils/tree/flattenTree"
 import { getId, getName } from "../utils/treeItemUtils"
-
-const { utils: { createFullName } } = treey
 
 type Props = {
   children: ReactNode
@@ -18,13 +15,8 @@ const UIProvider: React.FC<Props> = ({ children }) => {
   // shown form
 
   const [shownForm, set] = useState<Path>()
-  const createPath = (parents: Ids, isAdd = false) : Path => {
-    const arr = parents.map(id => createFullName(id))
-    return (isAdd ? arr.concat("add") : arr).join("/")
-  }
-  const isShownForm = (parents: Ids, isAdd = false) => shownForm === createPath(parents, isAdd)
-  const setShownForm = (parents: Ids, isAdd = false) => set(createPath(parents, isAdd))
-  const setShownFormPath = (path: Path) => set(path)
+  const isShownForm = (path: Path) => shownForm === path
+  const setShownForm = (path: Path) => set(path)
   const unsetShownForm = () => set(undefined)
 
   // @TODO: Move to KeyboardBindings
@@ -39,17 +31,14 @@ const UIProvider: React.FC<Props> = ({ children }) => {
   // is opened
 
   const [isOpen, setStateIsOpen] = useState<Paths>([])
-  const itemIsOpen = (ids: Ids) => {
-    const path = createPath(ids)
+  const itemIsOpen = (path: Path) => {
     return isOpen.includes(path)
   }
-  const setIsOpen = (ids: Ids) => {
-    if (itemIsOpen(ids)) return
-    const path = createPath(ids)
+  const setIsOpen = (path: Path) => {
+    if (itemIsOpen(path)) return
     setStateIsOpen(isOpen.concat(path))
   }
-  const unsetIsOpen = (ids: Ids) => {
-    const path = createPath(ids)
+  const unsetIsOpen = (path: Path) => {
     setStateIsOpen(isOpen.filter(i => i !== path))
   }
 
@@ -57,8 +46,8 @@ const UIProvider: React.FC<Props> = ({ children }) => {
 
   const [isDragging, setStateIsDragging] = useState<Path>()
   const anyItemIsDragging = () => isDragging !== undefined
-  const itemIsDragging = (ids: Ids) => isDragging === createPath(ids)
-  const setIsDragging = (ids: Ids) => setStateIsDragging(createPath(ids))
+  const itemIsDragging = (path: Path) => isDragging === path
+  const setIsDragging = (path: Path) => setStateIsDragging(path)
   const unsetIsDragging = () => setStateIsDragging(undefined)
 
   // is active
@@ -74,8 +63,8 @@ const UIProvider: React.FC<Props> = ({ children }) => {
     const items = flattenedArr.slice(1)
 
     const setFirstItemActive = () => {
-      const ids = [getId(root)!, getId(items[0])!]
-      setStateIsActive(createPath(ids))
+      const path = `${ getId(root)! }/${ getId(items[0])! }`
+      setStateIsActive(path)
     }
 
     if (isActive === undefined) {
@@ -89,19 +78,18 @@ const UIProvider: React.FC<Props> = ({ children }) => {
         followingIndex > l ? 0 :
         followingIndex < 0 ? l :
         followingIndex
-      const ids = [getId(root)!, getId(items[i])!]
-      setStateIsActive(createPath(ids))
+      const path = `${ getId(root)! }/${ getId(items[i])! }`
+      setStateIsActive(path)
     }
   }
-  const itemIsActive = (ids?: Ids) => {
-    if (ids === undefined) return isActive !== undefined
-    return isActive === createPath(ids)
+  const itemIsActive = (path?: Path) => {
+    if (path === undefined) return isActive !== undefined
+    return isActive === path
   }
 
   const value = {
     isShownForm,
     setShownForm,
-    setShownFormPath,
     unsetShownForm,
     itemIsOpen,
     setIsOpen,

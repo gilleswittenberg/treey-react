@@ -2,15 +2,13 @@ import React, { useContext, useRef, useState } from "react"
 import { useDrop } from 'react-dnd'
 import TreeyContext from "../contexts/TreeyContext"
 import ItemBody from "./ItemBody"
-import { getId, getName } from "../utils/treeItemUtils"
-import last from "../utils/last"
 import cs from "classnames"
 
 import "../styles/ItemDnD.sass"
 
 type Props = {
-  parents: Ids
-  path: Ids
+  parent: Id
+  path: Path
   index: Index
   item: TreeItem
   onClick: () => void
@@ -21,10 +19,7 @@ type Props = {
 
 type HoverRegion = "top" | "bottom"
 
-const ItemDnD: React.FC<Props> = ({ parents, path, index, item, onClick, onClickAdd, onClickEdit, onClickDelete }) => {
-
-  const id = getId(item)
-  const name = getName(id, parents)
+const ItemDnD: React.FC<Props> = ({ parent, path, index, item, onClick, onClickAdd, onClickEdit, onClickDelete }) => {
 
   const { treey } = useContext(TreeyContext)
   const ref = useRef<HTMLDivElement>(null)
@@ -32,14 +27,14 @@ const ItemDnD: React.FC<Props> = ({ parents, path, index, item, onClick, onClick
 
   const [{ canDrop, isOver }, drop] = useDrop({
     accept: "item",
-    canDrop: (item, monitor) => monitor.getItem().name !== name,
+    canDrop: (item, monitor) => monitor.getItem().path !== path,
     hover: (item, monitor) => {
       const clientOffset = monitor.getClientOffset()
       const clientRect = ref && ref.current && ref.current.getBoundingClientRect()
       if (clientRect && clientOffset) {
         const itemHeight = 44
         const verticalSpacing = 6
-        const h = itemHeight + 2 * verticalSpacing 
+        const h = itemHeight + 2 * verticalSpacing
         const y = clientOffset.y - clientRect.top
         const newHoverRegion = y <= h / 2 ? "top" : "bottom"
         setHoverRegion(newHoverRegion)
@@ -52,18 +47,18 @@ const ItemDnD: React.FC<Props> = ({ parents, path, index, item, onClick, onClick
 
       const draggableData = item as DraggableData
       const id = draggableData.id
-      const oldParentId = last(draggableData.parents)
+      const oldParentId = draggableData.parent
       const oldIndex = draggableData.index
-      const parentId = last(parents)
       // add one if hover over bottom
       // substract one if draggable came from before droppable
-      const newIndex = index + (hoverRegion === "bottom" ? 1 : 0) - (oldParentId === parentId && oldIndex < index ? 1 : 0)
+      const newIndex = index + (hoverRegion === "bottom" ? 1 : 0) - (oldParentId === parent && oldIndex < index ? 1 : 0)
       // guard for dropped on previous location
-      if (oldParentId === parentId && oldIndex === newIndex) return
+      console.log(id, oldParentId, parent, oldIndex, newIndex)
+      if (oldParentId === parent && oldIndex === newIndex) return
 
       // guard for null treey context
       if (treey == null) return
-      await treey.move(id, oldParentId, parentId, oldIndex, newIndex)
+      await treey.move(id, oldParentId, parent, oldIndex, newIndex)
     },
     collect: monitor => ({
       isOver: monitor.isOver({ shallow: true }),
@@ -81,6 +76,7 @@ const ItemDnD: React.FC<Props> = ({ parents, path, index, item, onClick, onClick
         <div className={ cs("dnd-placeholder", { isShown: showPrePlaceholder }) }><div></div></div>
         <ItemBody
           path={ path }
+          parent={ parent }
           index={ index }
           item={ item }
           isOver={ isOver }
