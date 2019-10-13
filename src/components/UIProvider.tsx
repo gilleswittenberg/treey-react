@@ -43,7 +43,9 @@ const UIProvider: React.FC<Props> = ({ children }) => {
     const treeWithAdd = appendAddToSiblings([tree])
     const rootPath = getName(getId(tree), [])
     const arr = open.concat(rootPath)
-    const flattenedArr = flattenTree(pruneTree(treeWithAdd, arr))
+
+    const prunedTree = pruneTree(treeWithAdd, arr)
+    const flattenedArr = flattenTree(prunedTree)
     // remove root item
     const items = flattenedArr.slice(1)
 
