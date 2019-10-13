@@ -18,20 +18,28 @@ const KeyboardEvents: React.FC = () => {
       if (isShownForm() && event.keyCode !== 27) return
       switch (event.keyCode) {
         // down arrow
+        // k (VIM)
         case 40:
+        case 75:
           changeActive()
           break
         // up arrow
+        // i (VIM)
         case 38:
+        case 73:
           changeActive("prev")
           break
         // right arrow
+        // l (VIM)
         case 39:
+        case 76:
           if (active === undefined) return
           setOpen(active)
           break
         // left arrow
+        // j (VIM)
         case 37:
+        case 74:
           if (active === undefined) return
           unsetOpen(active)
           break
