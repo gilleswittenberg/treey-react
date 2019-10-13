@@ -14,30 +14,35 @@ const KeyboardBindings: React.FC<Props> = ({ children }) => {
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
       if (isShownForm()) return
-      // @TODO: Use switch
-      // up arrow
-      if (event.keyCode === 40) {
-        changeActive()
-      }
-      // down arrow
-      else if (event.keyCode === 38) {
-        changeActive("prev")
-      }
-      // right arrow
-      else if (event.keyCode === 39) {
-        if (active === undefined) return
-        setOpen(active)
-      }
-      // left arrow
-      else if (event.keyCode === 37) {
-        if (active === undefined) return
-        unsetOpen(active)
-      }
-      // enter
-      else if (event.keyCode === 13) {
-        event.preventDefault()
-        if (active === undefined) return
-        setShownForm(active)
+      switch (event.keyCode) {
+        // down arrow
+        case 40:
+          changeActive()
+          break
+        // up arrow
+        case 38:
+          changeActive("prev")
+          break
+        // right arrow
+        case 39:
+          if (active === undefined) return
+          setOpen(active)
+          break
+        // left arrow
+        case 37:
+          if (active === undefined) return
+          unsetOpen(active)
+          break
+        // enter
+        case 13:
+          event.preventDefault()
+          if (active === undefined) return
+          setShownForm(active)
+          break
+        // backspace
+        case 8:
+          // delete
+          break
       }
     }
     window.addEventListener("keydown", handler)
