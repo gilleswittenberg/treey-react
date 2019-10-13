@@ -4,6 +4,7 @@ import { DndProvider } from "react-dnd"
 import HTML5Backend from "react-dnd-html5-backend"
 import UIContext from "../contexts/UIContext"
 import KeyboardEvents from "../components/KeyboardEvents"
+import MouseEvents from "../components/MouseEvents"
 import { getId, createFullName } from "../utils/treeItemUtils"
 
 import "../styles/Tree.sass"
@@ -27,11 +28,14 @@ const Tree: React.FC<Props> = ({ tree, treey }) => {
 
   return (
     <div className="Tree">
-      <KeyboardEvents />
       { hasTree &&
-        <DndProvider backend={ HTML5Backend }>
-          <Items path={ path! } parent={ parent! } items={ items! } />
-        </DndProvider>
+        <>
+          <KeyboardEvents />
+          <MouseEvents />
+          <DndProvider backend={ HTML5Backend }>
+            <Items path={ path! } parent={ parent! } items={ items! } />
+          </DndProvider>
+        </>
       }
     </div>
   )
