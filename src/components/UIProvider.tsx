@@ -1,6 +1,5 @@
 import React, { ReactNode, useEffect } from "react"
 import UIContext from '../contexts/UIContext'
-import useEscListener from "../hooks/useEscListener"
 import useTreey from "../hooks/useTreey"
 import pruneTree from "../utils/tree/pruneTree"
 import flattenTree from "../utils/tree/flattenTree"
@@ -17,9 +16,6 @@ const UIProvider: React.FC<Props> = ({ children }) => {
 
   // shown form
   const [, isShownForm, setShownForm, unsetShownForm] = usePathState()
-
-  // @TODO: Move to KeyboardBindings
-  useEscListener(unsetShownForm)
 
   // @TODO: Move to component MouseEvents
   useEffect(() => {

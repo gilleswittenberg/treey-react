@@ -1,19 +1,21 @@
-import React, { ReactNode, useContext, useEffect } from "react"
+import React, { useContext, useEffect } from "react"
 import UIContext from "../contexts/UIContext"
 
-type Props = {
-  children: ReactNode
-}
+const KeyboardEvents: React.FC = () => {
 
-// @TODO: Rename to KeyboardEvents
-// @TODO: Remove children props (leaf component)
-const KeyboardBindings: React.FC<Props> = ({ children }) => {
-
-  const { isShownForm, setShownForm, setOpen, unsetOpen, active, changeActive } = useContext(UIContext)
+  const {
+    isShownForm,
+    setShownForm,
+    unsetShownForm,
+    setOpen,
+    unsetOpen,
+    active,
+    changeActive
+  } = useContext(UIContext)
 
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
-      if (isShownForm()) return
+      if (isShownForm() && event.keyCode !== 27) return
       switch (event.keyCode) {
         // down arrow
         case 40:
@@ -39,6 +41,10 @@ const KeyboardBindings: React.FC<Props> = ({ children }) => {
           if (active === undefined) return
           setShownForm(active)
           break
+        // esc
+        case 27:
+          unsetShownForm()
+          break
         // backspace
         case 8:
           // delete
@@ -47,9 +53,17 @@ const KeyboardBindings: React.FC<Props> = ({ children }) => {
     }
     window.addEventListener("keydown", handler)
     return () => window.removeEventListener("keydown", handler)
-  }, [isShownForm, setShownForm, setOpen, unsetOpen, active, changeActive])
+  }, [
+    isShownForm,
+    setShownForm,
+    unsetShownForm,
+    setOpen,
+    unsetOpen,
+    active,
+    changeActive
+  ])
 
-  return (<>{ children }</>)
+  return null
 }
 
-export default KeyboardBindings
+export default KeyboardEvents
