@@ -6,7 +6,9 @@ const pruneTree = (tree: TreeItems, isOpen: Paths, parents: Ids = []) : TreeItem
     const id = getId(treeItem)!
     const treeItemName = getName(id, parents)
     const treeItemIsOpen = isOpen.includes(treeItemName)
-    const relations = treeItemIsOpen ? pruneTree(treeItem.relations, isOpen, parents.concat(id)) : []
+    const hasRelations = treeItem.relations.length > 1
+    const shouldPrune = treeItemIsOpen && hasRelations
+    const relations = shouldPrune ? pruneTree(treeItem.relations, isOpen, parents.concat(id)) : []
     const newTreeItem = { ...treeItem, relations }
     prunedTree.push(newTreeItem)
   })

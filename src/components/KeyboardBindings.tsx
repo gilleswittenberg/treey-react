@@ -9,18 +9,28 @@ type Props = {
 // @TODO: Remove children props (leaf component)
 const KeyboardBindings: React.FC<Props> = ({ children }) => {
 
-  const { changeActive } = useContext(UIContext)
+  const { setOpen, unsetOpen, active, changeActive } = useContext(UIContext)
 
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
+      // @TODO: Use switch
       // up arrow
       if (event.keyCode === 40) {
-        event.preventDefault()
         changeActive()
+      }
       // down arrow
-      } else if (event.keyCode === 38) {
-        event.preventDefault()
+      else if (event.keyCode === 38) {
         changeActive("prev")
+      }
+      // right arrow
+      else if (event.keyCode === 39) {
+        if (active === undefined) return
+        setOpen(active)
+      }
+      // left arrow
+      else if (event.keyCode === 37) {
+        if (active === undefined) return
+        unsetOpen(active)
       }
       // enter
       /*
