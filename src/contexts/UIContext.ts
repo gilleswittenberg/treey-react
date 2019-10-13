@@ -10,7 +10,7 @@ type Value = {
   isDragging (path?: Path) : boolean
   setDragging (path: Path) : void
   unsetDragging () : void
-  isActivePath: Path | undefined
+  active: Path | undefined
   isActive (path?: Path) : boolean
   changeActive (direction?: Direction) : void
 }
@@ -27,7 +27,7 @@ const value = {
   isDragging: unimplemented,
   setDragging: unimplemented,
   unsetDragging: unimplemented,
-  isActivePath: undefined,
+  active: undefined,
   isActive: unimplemented,
   changeActive: unimplemented
 } as Value

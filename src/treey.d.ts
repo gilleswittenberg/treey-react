@@ -28,6 +28,9 @@ declare type TreeItems = TreeItem[]
 declare type ItemEvent = any
 declare type Path = string
 declare type Paths = Path[]
+declare type TreeNode = {
+  readonly path?: Path
+}
 
 declare type Treey = {
   read (id: Id) : Promise<TreeItem | undefined>

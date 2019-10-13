@@ -17,11 +17,12 @@ type Props = {
 const FormAdd: React.FC<Props> = ({ path: parentPath, parent, isDisabled }) => {
 
   const path = `${ parentPath }/add`
-  const { isShownForm, setShownForm, unsetShownForm } = useContext(UIContext)
+  const { isShownForm, setShownForm, unsetShownForm, isActive: itemIsActive } = useContext(UIContext)
   const { treey } = useContext(TreeyContext)
 
   const showForm = isShownForm(path)
   const show = isDisabled || !showForm
+  const isActive = itemIsActive(path)
 
   const onClick = () => {
     setShownForm(path)
@@ -37,7 +38,7 @@ const FormAdd: React.FC<Props> = ({ path: parentPath, parent, isDisabled }) => {
   }
 
   return (
-    <div className={ cs("FormAdd", { isDisabled }) } onClick={ event => event.stopPropagation() }>
+    <div className={ cs("FormAdd", { isDisabled, isActive }) } onClick={ event => event.stopPropagation() }>
       { show &&
         <Button onClick={ onClick } type="ADD" />
       }

@@ -4,6 +4,7 @@ import useEscListener from "../hooks/useEscListener"
 import useTreey from "../hooks/useTreey"
 import pruneTree from "../utils/tree/pruneTree"
 import flattenTree from "../utils/tree/flattenTree"
+import appendAddToSiblings from "../utils/tree/appendAddToSiblings"
 import { getId, getName } from "../utils/treeItemUtils"
 import usePathState from "../hooks/usePathState"
 import usePathsState from "../hooks/usePathsState"
@@ -27,24 +28,27 @@ const UIProvider: React.FC<Props> = ({ children }) => {
   }, [unsetShownForm])
 
   // is opened
-  const [isOpenPaths, isOpen, setOpen, unsetOpen] = usePathsState()
+  const [open, isOpen, setOpen, unsetOpen] = usePathsState()
 
   // is dragging
   const [, isDragging, setDragging, unsetDragging] = usePathState()
 
   // is active
-  const [isActivePath, isActive, setActive] = usePathState()
+  const [active, isActive, setActive] = usePathState()
   const [tree] = useTreey()
   const changeActive = (direction: Direction = "next") => {
-    if (!tree) return
 
-    const arr = isOpenPaths.concat(getName(getId(tree), []))
-    const flattenedArr = flattenTree(pruneTree([tree as TreeItem], arr))
-    const root = flattenedArr[0]
+    if (tree == null) return
+
+    const treeWithAdd = appendAddToSiblings([tree])
+    const rootPath = getName(getId(tree), [])
+    const arr = open.concat(rootPath)
+    const flattenedArr = flattenTree(pruneTree(treeWithAdd, arr))
+    // remove root item
     const items = flattenedArr.slice(1)
 
     const setFirstItemActive = () => {
-      const path = getName(getId(items[0])!, [getId(root)!])
+      const path = items[0].path!
       setActive(path)
     }
 
@@ -59,7 +63,7 @@ const UIProvider: React.FC<Props> = ({ children }) => {
         followingIndex > l ? 0 :
         followingIndex < 0 ? l :
         followingIndex
-      const path = getName(getId(items[i])!, [getId(root)!])
+      const path = items[i].path!
       setActive(path)
     }
   }
@@ -74,7 +78,7 @@ const UIProvider: React.FC<Props> = ({ children }) => {
     isDragging,
     setDragging,
     unsetDragging,
-    isActivePath,
+    active,
     isActive,
     changeActive
   }
