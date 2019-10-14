@@ -88,7 +88,8 @@ const KeyboardEvents: React.FC = () => {
     setOpen,
     unsetOpen,
     active,
-    changeActive
+    changeActive,
+    treey
   ])
 
   return null
