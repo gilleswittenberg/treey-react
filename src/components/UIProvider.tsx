@@ -72,6 +72,7 @@ const UIProvider: React.FC<Props> = ({ children }) => {
     unsetDragging,
     active,
     isActive,
+    setActive,
     changeActive
   }
 
