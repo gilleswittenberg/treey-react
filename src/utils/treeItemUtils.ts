@@ -1,5 +1,5 @@
 import treey from "treey"
-const { utils: { createFullName } } = treey
+const { utils: { createFullName, parseFullName } } = treey
 
 export const getId = (item: TreeItem) : Id | undefined => item.state.ids && item.state.ids[0]
 export const getData = (item: TreeItem) : Data => item.state && item.state.data
@@ -17,4 +17,10 @@ export const parseData = (str: string) : Data => {
     return str
   }
 }
+export const parsePath = (path: Path) : Ids => {
+  const strs = path.split("/")
+  const ids = strs.map(id => parseFullName(id))
+  return ids.filter((id: Id | undefined) : id is Id => id !== undefined)
+}
 export { createFullName }
+export { parseFullName }

@@ -1,5 +1,8 @@
 import React, { useContext, useEffect } from "react"
 import UIContext from "../contexts/UIContext"
+import TreeyContext from "../contexts/TreeyContext"
+import { parsePath } from "../utils/treeItemUtils"
+import last from "../utils/last"
 
 const KeyboardEvents: React.FC = () => {
 
@@ -12,6 +15,8 @@ const KeyboardEvents: React.FC = () => {
     active,
     changeActive
   } = useContext(UIContext)
+
+  const { treey } = useContext(TreeyContext)
 
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
@@ -53,9 +58,24 @@ const KeyboardEvents: React.FC = () => {
         case 27:
           unsetShownForm()
           break
+        // +
+        case 187:
+          if (event.shiftKey === false) return
+          if (active === undefined) return
+          event.preventDefault()
+          const pathAdd = `${ active }/add`
+          setShownForm(pathAdd)
+          break
         // backspace
         case 8:
-          // delete
+          if (treey === null) return
+          if (active === undefined) return
+          const ids = parsePath(active)
+          const id = last(ids)
+          if (id === undefined) return
+          const parentId = last(ids.slice(0, -1))
+          if (parentId === undefined) return
+          treey.remove(id, parentId)
           break
       }
     }
