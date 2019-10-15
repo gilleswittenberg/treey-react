@@ -17,7 +17,7 @@ type Props = {
 const FormAdd: React.FC<Props> = ({ path: parentPath, parent, isDisabled }) => {
 
   const path = `${ parentPath }/add`
-  const { isShownForm, setShownForm, unsetShownForm, isActive: itemIsActive } = useContext(UIContext)
+  const { isShownForm, setShownForm, unsetShownForm, isActive: itemIsActive, setOpen } = useContext(UIContext)
   const { treey } = useContext(TreeyContext)
 
   const showForm = isShownForm(path)
@@ -30,6 +30,7 @@ const FormAdd: React.FC<Props> = ({ path: parentPath, parent, isDisabled }) => {
 
   const submit = async (value: string) => {
     unsetShownForm()
+    setOpen(parentPath)
     const trimmedValue = value.trim()
     if (trimmedValue === "") return
     if (treey === null) return

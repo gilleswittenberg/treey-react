@@ -67,8 +67,8 @@ const Item: React.FC<Props> = ({ path: parentPath, parent, index, item }) => {
     setShownForm(path)
     setActive(path)
   }
-  const onClickDelete = () => {
-    remove()
+  const onClickDelete = async () => {
+    await remove()
     unsetOpen(path)
     setActive(parentPath)
   }

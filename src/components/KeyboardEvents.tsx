@@ -19,7 +19,7 @@ const KeyboardEvents: React.FC = () => {
   const { treey } = useContext(TreeyContext)
 
   useEffect(() => {
-    const handler = (event: KeyboardEvent) => {
+    const handler = async (event: KeyboardEvent) => {
       if (isShownForm() && event.keyCode !== 27) return
       switch (event.keyCode) {
         // down arrow
@@ -75,7 +75,9 @@ const KeyboardEvents: React.FC = () => {
           if (id === undefined) return
           const parentId = last(ids.slice(0, -1))
           if (parentId === undefined) return
-          treey.remove(id, parentId)
+          changeActive("prev")
+          unsetOpen(active)
+          await treey.remove(id, parentId)
           break
       }
     }
