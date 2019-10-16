@@ -22,5 +22,8 @@ export const parsePath = (path: Path) : Ids => {
   const ids = strs.map(id => parseFullName(id))
   return ids.filter((id: Id | undefined) : id is Id => id !== undefined)
 }
+export const isPathAdd = (path: Path) : boolean => {
+  return path.slice(-4) === "/add"
+}
 export { createFullName }
 export { parseFullName }
