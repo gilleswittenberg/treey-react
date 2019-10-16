@@ -17,7 +17,7 @@ type Props = {
 const FormAdd: React.FC<Props> = ({ path: parentPath, parent, isDisabled }) => {
 
   const path = `${ parentPath }/add`
-  const { isShownForm, setShownForm, unsetShownForm, isActive: itemIsActive, setOpen } = useContext(UIContext)
+  const { isShownForm, setShownForm, unsetShownForm, isActive: itemIsActive, setActive, setOpen } = useContext(UIContext)
   const { treey } = useContext(TreeyContext)
 
   const showForm = isShownForm(path)
@@ -26,6 +26,7 @@ const FormAdd: React.FC<Props> = ({ path: parentPath, parent, isDisabled }) => {
 
   const onClick = () => {
     setShownForm(path)
+    setActive(path)
   }
 
   const submit = async (value: string) => {
