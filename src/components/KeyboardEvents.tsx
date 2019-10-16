@@ -13,6 +13,7 @@ const KeyboardEvents: React.FC = () => {
     setOpen,
     unsetOpen,
     active,
+    setActive,
     changeActive
   } = useContext(UIContext)
 
@@ -65,6 +66,7 @@ const KeyboardEvents: React.FC = () => {
           event.preventDefault()
           const pathAdd = `${ active }/add`
           setShownForm(pathAdd)
+          setActive(pathAdd)
           break
         // backspace
         case 8:
@@ -90,6 +92,7 @@ const KeyboardEvents: React.FC = () => {
     setOpen,
     unsetOpen,
     active,
+    setActive,
     changeActive,
     treey
   ])
