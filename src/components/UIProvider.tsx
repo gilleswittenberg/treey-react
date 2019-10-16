@@ -1,6 +1,6 @@
-import React, { ReactNode } from "react"
+import React, { useContext, ReactNode } from "react"
 import UIContext from '../contexts/UIContext'
-import useTreey from "../hooks/useTreey"
+import TreeyContext from '../contexts/TreeyContext'
 import pruneTree from "../utils/tree/pruneTree"
 import flattenTree from "../utils/tree/flattenTree"
 import appendAddToSiblings from "../utils/tree/appendAddToSiblings"
@@ -25,7 +25,8 @@ const UIProvider: React.FC<Props> = ({ children }) => {
 
   // is active
   const [active, isActive, setActive] = usePathState()
-  const [tree] = useTreey()
+
+  const { tree } = useContext(TreeyContext)
   const changeActive = (direction: Direction = "next") => {
 
     if (tree == null) return
