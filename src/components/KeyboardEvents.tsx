@@ -3,7 +3,7 @@ import UIContext from "../contexts/UIContext"
 import TreeyContext from "../contexts/TreeyContext"
 import { parsePath } from "../utils/treeItemUtils"
 import last from "../utils/last"
-import { isPathAdd } from "../utils/treeItemUtils"
+import { isPathAdd, getItemFromPath } from "../utils/treeItemUtils"
 
 const KeyboardEvents: React.FC = () => {
 
@@ -12,13 +12,21 @@ const KeyboardEvents: React.FC = () => {
     setShownForm,
     unsetShownForm,
     setOpen,
+    isOpen,
     unsetOpen,
     active,
     setActive,
     changeActive
   } = useContext(UIContext)
 
-  const { treey } = useContext(TreeyContext)
+  const { tree, treey } = useContext(TreeyContext)
+
+  const canOpen = (path: Path) => {
+    if (tree == null) return false
+    if (isPathAdd(path)) return false
+    const item = getItemFromPath(tree, path)
+    return item && item.relations.length > 0
+  }
 
   useEffect(() => {
     const handler = async (event: KeyboardEvent) => {
@@ -41,6 +49,7 @@ const KeyboardEvents: React.FC = () => {
         case 39:
         case 76:
           if (active === undefined) return
+          if (isOpen(active) || canOpen(active) === false) return changeActive()
           setOpen(active)
           break
         // left arrow
@@ -48,6 +57,7 @@ const KeyboardEvents: React.FC = () => {
         case 37:
         case 74:
           if (active === undefined) return
+          if (isOpen(active) === false) return changeActive("prev")
           unsetOpen(active)
           break
         // enter
@@ -90,6 +100,7 @@ const KeyboardEvents: React.FC = () => {
     isShownForm,
     setShownForm,
     unsetShownForm,
+    isOpen,
     setOpen,
     unsetOpen,
     active,
