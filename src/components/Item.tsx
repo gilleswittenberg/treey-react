@@ -51,6 +51,7 @@ const Item: React.FC<Props> = ({ path: parentPath, parent, index, item }) => {
   const showItems = !isDragging && ((isOpen && hasRelations) || isShownForm(pathAdd))
 
   const onClick = () => {
+    setActive(path)
     if (isShownForm(pathAdd)) unsetShownForm()
     const selection = window.getSelection()
     if (selection && selection.toString() !== "") return
