@@ -21,14 +21,15 @@ const KeyboardEvents: React.FC = () => {
 
   const { tree, treey } = useContext(TreeyContext)
 
-  const canOpen = (path: Path) => {
-    if (tree == null) return false
-    if (isPathAdd(path)) return false
-    const item = getItemFromPath(tree, path)
-    return item && item.relations.length > 0
-  }
-
   useEffect(() => {
+
+    const canOpen = (path: Path) => {
+      if (tree == null) return false
+      if (isPathAdd(path)) return false
+      const item = getItemFromPath(tree, path)
+      return item && item.relations.length > 0
+    }
+
     const handler = async (event: KeyboardEvent) => {
       if (isShownForm() && event.keyCode !== 27) return
       switch (event.keyCode) {
@@ -106,6 +107,7 @@ const KeyboardEvents: React.FC = () => {
     active,
     setActive,
     changeActive,
+    tree,
     treey
   ])
 
