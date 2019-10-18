@@ -27,7 +27,7 @@ const KeyboardEvents: React.FC = () => {
       if (tree == null) return false
       if (isPathAdd(path)) return false
       const item = getItemFromPath(tree, path)
-      return item && item.relations.length > 0
+      return item !== undefined && item.relations.length > 0
     }
 
     const handler = async (event: KeyboardEvent) => {

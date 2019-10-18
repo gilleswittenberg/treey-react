@@ -6,9 +6,7 @@ export { parseFullName }
 
 export const getId = (item: TreeItem) : Id | undefined => item.state.ids && item.state.ids[0]
 export const getData = (item: TreeItem) : Data => item.state && item.state.data
-// @TODO: getPath should return Path not Ids
-export const getPath = (id: Id | undefined, parents: Ids) : Ids => id ? parents.concat(id) : parents
-export const getName = (id: Id | undefined, parents: Ids) : Name => getPath(id, parents).map(id => createFullName(id)).join("/")
+
 export const stringifyData = (data: Data) : string => {
   if (typeof data === "string") return data
   return JSON.stringify(data, undefined, 1)
@@ -20,6 +18,8 @@ export const parseData = (str: string) : Data => {
     return str
   }
 }
+
+export const createPath = (ids: Ids) => ids.map(id => createFullName(id)).join("/")
 export const parsePath = (path: Path) : Ids => {
   const strs = path.split("/")
   const ids = strs.map(id => parseFullName(id))
@@ -28,7 +28,6 @@ export const parsePath = (path: Path) : Ids => {
 export const isPathAdd = (path: Path) : boolean => {
   return path.slice(-4) === "/add"
 }
-
 export const getItemFromPath = (tree: TreeItem, path: Path) : TreeItem | undefined => {
   const compareIds = (id: Id | undefined, id1: Id | undefined) => {
     if (id === undefined || id1 === undefined) return false
