@@ -20,15 +20,21 @@ $paddingLeft: $spacing * 8
         > span,
         button
           background-color: darken($lightGray, 10%)
+      &:hover
+        .ItemBody
+          button
+            background-color: lighten(darken($lightGray, 10%), 2%)
+
 
   .ItemBody
     height: $height
     cursor: pointer
     background-color: $lightGray
+    transition: background-color .2s
     border-radius: $borderRadius
 
     &.showButtons
-      background-color: transparent
+      background-color: transparent !important
       button, a.info
         visibility: visible
         opacity: 1
@@ -103,7 +109,7 @@ $paddingLeft: $spacing * 8
         border-radius: $borderRadius
         padding-left: $paddingLeft
       button
-        background-color: $lightGray
+        background-color: darken($lightGray, 10%)
         border-radius: $borderRadius
         margin-left: $bottomSpacing
         transition: background-color .2s
@@ -111,4 +117,4 @@ $paddingLeft: $spacing * 8
         height: $height
         vertical-align: top
         &:hover
-          background-color: lighten($lightGray, 2%)
+          background-color: lighten(darken($lightGray, 10%), 2%)
