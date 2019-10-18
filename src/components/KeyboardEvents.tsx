@@ -3,7 +3,7 @@ import UIContext from "../contexts/UIContext"
 import TreeyContext from "../contexts/TreeyContext"
 import { parsePath } from "../utils/treeItemUtils"
 import last from "../utils/last"
-import { isPathAdd, getItemFromPath } from "../utils/treeItemUtils"
+import { createPathAdd, isPathAdd, getItemFromPath } from "../utils/treeItemUtils"
 
 const KeyboardEvents: React.FC = () => {
 
@@ -76,7 +76,7 @@ const KeyboardEvents: React.FC = () => {
           if (event.shiftKey === false) return
           if (active === undefined) return
           event.preventDefault()
-          const pathAdd = isPathAdd(active) ? active : `${ active }/add`
+          const pathAdd = isPathAdd(active) ? active : createPathAdd(active)
           setShownForm(pathAdd)
           setActive(pathAdd)
           break

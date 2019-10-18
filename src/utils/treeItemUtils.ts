@@ -20,6 +20,7 @@ export const parseData = (str: string) : Data => {
 }
 
 export const createPath = (ids: Ids) => ids.map(id => createFullName(id)).join("/")
+export const createPathAdd = (path: Path) => `${ path }/add`
 export const parsePath = (path: Path) : Ids => {
   const strs = path.split("/")
   const ids = strs.map(id => parseFullName(id))

@@ -1,4 +1,4 @@
-import { getId, createFullName } from "../treeItemUtils"
+import { getId, createFullName, createPathAdd } from "../treeItemUtils"
 
 const appendAddToSiblings = (tree: TreeItems, parentPath?: Path) : TreeItems => {
   const newTree: TreeItems = []
@@ -13,7 +13,7 @@ const appendAddToSiblings = (tree: TreeItems, parentPath?: Path) : TreeItems => 
       isCyclic: false,
       isKnown: true,
       isDestroyed: false,
-      path: `${ path }/add`
+      path: createPathAdd(path)
     }
     relations.push(treeItemAdd)
     const newTreeItem = { ...treeItem, relations }

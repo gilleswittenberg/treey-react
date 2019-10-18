@@ -4,7 +4,7 @@ import UIContext from "../contexts/UIContext"
 import ItemDnD from "./ItemDnD"
 import ItemForm from "./ItemForm"
 import Items from "./Items"
-import { getId, getData, stringifyData, parseData, createFullName } from "../utils/treeItemUtils"
+import { getId, getData, stringifyData, parseData, createFullName, createPathAdd } from "../utils/treeItemUtils"
 import cs from "classnames"
 import { isEqual } from "lodash"
 
@@ -21,7 +21,7 @@ const Item: React.FC<Props> = ({ path: parentPath, parent, index, item }) => {
 
   const id = getId(item)!
   const path = `${ parentPath }/${ createFullName(id) }`
-  const pathAdd = `${ path }/add`
+  const pathAdd = createPathAdd(path)
   const data = getData(item)
   const dataString = stringifyData(data)
   const hasRelations = item.relations.length > 0
