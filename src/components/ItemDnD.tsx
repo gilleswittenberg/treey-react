@@ -73,7 +73,7 @@ const ItemDnD: React.FC<Props> = ({ parent, path, index, item, onClick, onClickA
   return (
     <div ref={ ref }>
       <div ref={ drop }>
-        <div className={ cs("dnd-placeholder", { isShown: showPrePlaceholder }) }><div></div></div>
+        <div className={ cs("DnDPlaceholder", { isShown: showPrePlaceholder }) }><div></div></div>
         <ItemBody
           path={ path }
           parent={ parent }
@@ -85,7 +85,7 @@ const ItemDnD: React.FC<Props> = ({ parent, path, index, item, onClick, onClickA
           onClickEdit={ onClickEdit }
           onClickDelete={ onClickDelete }
         />
-        <div className={ cs("dnd-placeholder", { isShown: showPostPlaceholder }) }><div></div></div>
+        <div className={ cs("DnDPlaceholder", { isShown: showPostPlaceholder }) }><div></div></div>
       </div>
     </div>
   )

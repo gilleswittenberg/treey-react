@@ -100,7 +100,7 @@ const ItemBody: React.FC<Props> = ({ path, parent, index, item, isOver, onClick,
         <Button type="EDIT" onClick={ onClickEdit } />
         <Button type="DELETE" onClick={ onClickDelete } />
       </div>
-      <div className={ cs("dnd-placeholder", "dnd-placeholder-child", { isShown: showDnDPlaceHolderChild }) }><div></div></div>
+      <div className={ cs("DnDPlaceholder", "DnDPlaceholderChild", { isShown: showDnDPlaceHolderChild }) }><div></div></div>
     </div>
   )
 }
