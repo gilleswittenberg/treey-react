@@ -12,6 +12,7 @@ type Props = {
   index: Index
   item: TreeItem
   onClick: () => void
+  onDoubleClick: () => void
   onClickAdd: () => void
   onClickEdit: () => void
   onClickDelete: () => void
@@ -19,7 +20,7 @@ type Props = {
 
 type HoverRegion = "top" | "bottom"
 
-const ItemDnD: React.FC<Props> = ({ parent, path, index, item, onClick, onClickAdd, onClickEdit, onClickDelete }) => {
+const ItemDnD: React.FC<Props> = ({ parent, path, index, item, onClick, onDoubleClick, onClickAdd, onClickEdit, onClickDelete }) => {
 
   const { treey } = useContext(TreeyContext)
   const ref = useRef<HTMLDivElement>(null)
@@ -81,6 +82,7 @@ const ItemDnD: React.FC<Props> = ({ parent, path, index, item, onClick, onClickA
           item={ item }
           isOver={ isOver }
           onClick={ onClick }
+          onDoubleClick={ onDoubleClick }
           onClickAdd={ onClickAdd }
           onClickEdit={ onClickEdit }
           onClickDelete={ onClickDelete }

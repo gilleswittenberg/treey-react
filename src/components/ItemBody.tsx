@@ -17,12 +17,13 @@ type Props = {
   item: TreeItem
   isOver: boolean
   onClick: () => void
+  onDoubleClick: () => void
   onClickAdd: () => void
   onClickEdit: () => void
   onClickDelete: () => void
 }
 
-const ItemBody: React.FC<Props> = ({ path, parent, index, item, isOver, onClick, onClickAdd, onClickEdit, onClickDelete }) => {
+const ItemBody: React.FC<Props> = ({ path, parent, index, item, isOver, onClick, onDoubleClick, onClickAdd, onClickEdit, onClickDelete }) => {
 
   const id = getId(item)
   const dropId = id
@@ -85,7 +86,7 @@ const ItemBody: React.FC<Props> = ({ path, parent, index, item, isOver, onClick,
         onMouseEnter={ onMouseEnter }
         onMouseLeave={ onMouseLeave }
         >
-        <span onClick={ onClick }>
+        <span onClick={ onClick } onDoubleClick={ onDoubleClick }>
           <ItemData data={ dataString } />
           <Link to={ linkTo } className="info">ⓘ</Link>
         </span>

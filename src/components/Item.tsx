@@ -59,6 +59,10 @@ const Item: React.FC<Props> = ({ path: parentPath, parent, index, item }) => {
     if (!isOpen) return setOpen(path)
     if (isOpen) return unsetOpen(path)
   }
+  const onDoubleClick = () => {
+    setOpen(path)
+    setShownForm(pathAdd)
+  }
   const onClickAdd = () => {
     setShownForm(pathAdd)
     setOpen(path)
@@ -93,6 +97,7 @@ const Item: React.FC<Props> = ({ path: parentPath, parent, index, item }) => {
           index={ index }
           item={ item }
           onClick={ onClick }
+          onDoubleClick={ onDoubleClick }
           onClickAdd={ onClickAdd }
           onClickEdit={ onClickEdit }
           onClickDelete={ onClickDelete }
