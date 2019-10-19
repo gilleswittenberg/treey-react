@@ -16,6 +16,7 @@ type Props = {
 
 const Tree: React.FC<Props> = ({ tree, treey }) => {
 
+  // @TODO: Why can tree be undefined?
   const hasTree = tree !== undefined
   const items = hasTree ? tree.relations : undefined
   const id = hasTree ? getId(tree)! : undefined
