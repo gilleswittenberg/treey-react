@@ -1,12 +1,12 @@
-import React, { useContext } from "react"
+import React, { useContext, useRef, useEffect } from "react"
 import TreeyContext from "../contexts/TreeyContext"
 import UIContext from "../contexts/UIContext"
 import ItemDnD from "./ItemDnD"
 import ItemForm from "./ItemForm"
 import Items from "./Items"
-import { getId, getData, stringifyData, parseData, createFullName, createPathAdd } from "../utils/treeItemUtils"
 import cs from "classnames"
 import { isEqual } from "lodash"
+import { getId, getData, stringifyData, parseData, createPathAdd } from "../utils/treeItemUtils"
 
 import "../styles/Item.sass"
 
@@ -20,7 +20,7 @@ type Props = {
 const Item: React.FC<Props> = ({ path: parentPath, parent, index, item }) => {
 
   const id = getId(item)!
-  const path = `${ parentPath }/${ createFullName(id) }`
+  const path = `${ parentPath }/${ index }/${ item.name }`
   const pathAdd = createPathAdd(path)
   const data = getData(item)
   const dataString = stringifyData(data)
@@ -40,7 +40,8 @@ const Item: React.FC<Props> = ({ path: parentPath, parent, index, item }) => {
     setOpen,
     unsetOpen,
     isDragging: itemIsDragging,
-    setActive
+    setActive,
+    clear
   } = useContext(UIContext)
 
   const isOpen = itemIsOpen(path)
@@ -49,6 +50,16 @@ const Item: React.FC<Props> = ({ path: parentPath, parent, index, item }) => {
   const showItem = isDragging || !isEditing
   const showForm = !isDragging && isEditing
   const showItems = !isDragging && ((isOpen && hasRelations) || isShownForm(pathAdd))
+
+  const previousPath = useRef(path)
+  useEffect(() => {
+    const oldPath = previousPath.current
+    if (oldPath === path) return
+    clear(oldPath)
+    const wasOpen = itemIsOpen(oldPath)
+    if (wasOpen) setOpen(path)
+    return () => clear(path)
+  }, [path, clear, id, itemIsOpen, setOpen])
 
   const onClick = () => {
     setActive(path)
@@ -89,7 +100,7 @@ const Item: React.FC<Props> = ({ path: parentPath, parent, index, item }) => {
   }
 
   return (
-    <div className={ cs("Item") } onClick={ event => event.stopPropagation() }>
+    <div className="Item" onClick={ event => event.stopPropagation() }>
       <div className={ cs({ isHidden: !showItem }) }>
         <ItemDnD
           parent={ parent }

@@ -54,7 +54,6 @@ const ItemDnD: React.FC<Props> = ({ parent, path, index, item, onClick, onDouble
       // substract one if draggable came from before droppable
       const newIndex = index + (hoverRegion === "bottom" ? 1 : 0) - (oldParentId === parent && oldIndex < index ? 1 : 0)
       // guard for dropped on previous location
-      console.log(id, oldParentId, parent, oldIndex, newIndex)
       if (oldParentId === parent && oldIndex === newIndex) return
 
       // guard for null treey context

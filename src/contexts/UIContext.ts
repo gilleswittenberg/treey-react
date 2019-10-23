@@ -14,6 +14,7 @@ type Value = {
   isActive (path?: Path) : boolean
   setActive (path: Path) : void
   changeActive (direction?: Direction) : void
+  clear (path: Path) : void
 }
 
 const unimplemented = () => { throw new Error ("UIContext not implemented") }
@@ -31,7 +32,8 @@ const value = {
   active: undefined,
   isActive: unimplemented,
   setActive: unimplemented,
-  changeActive: unimplemented
+  changeActive: unimplemented,
+  clear: unimplemented
 } as Value
 
 const UIContext = createContext(value)

@@ -22,11 +22,14 @@ const Items: React.FC<Props> = ({ path, parent, items }) => {
     <div className="Items">
       { showItems &&
         <ul>
-          { items.map((item, index) =>
-              <li key={ item.name }>
-                <Item path={ path } parent={ parent } index={ index } item={ item } />
-              </li>
-            )
+          { items.map((item, index) => {
+              const key = `${ path }/${ index }/${ item.name }`
+              return (
+                <li key={ key }>
+                  <Item path={ path } parent={ parent } index={ index } item={ item } />
+                </li>
+              )
+            })
           }
         </ul>
       }

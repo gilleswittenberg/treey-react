@@ -1,15 +1,10 @@
-import { getId, createPath } from "../treeItemUtils"
-
-const pruneTree = (tree: TreeItems, isOpen: Paths, parents: Ids = []) : TreeItems => {
+const pruneTree = (tree: TreeItems, isOpen: Paths) : TreeItems => {
   const prunedTree: TreeItems = []
   tree.forEach(treeItem => {
-    const id = getId(treeItem)
-    const ids = id !== undefined ? parents.concat(id) : parents
-    const path = createPath(ids)
-    const treeItemIsOpen = isOpen.includes(path)
+    const treeItemIsOpen = isOpen.includes(treeItem.path!)
     const hasRelations = treeItem.relations.length > 1
     const shouldPrune = treeItemIsOpen && hasRelations
-    const relations = shouldPrune ? pruneTree(treeItem.relations, isOpen, ids) : []
+    const relations = shouldPrune ? pruneTree(treeItem.relations, isOpen) : []
     const newTreeItem = { ...treeItem, relations }
     prunedTree.push(newTreeItem)
   })

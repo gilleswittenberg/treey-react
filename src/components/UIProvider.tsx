@@ -4,7 +4,7 @@ import TreeyContext from '../contexts/TreeyContext'
 import pruneTree from "../utils/tree/pruneTree"
 import flattenTree from "../utils/tree/flattenTree"
 import appendAddToSiblings from "../utils/tree/appendAddToSiblings"
-import { getId, createFullName } from "../utils/treeItemUtils"
+import { getId, createFullName, createPathAdd } from "../utils/treeItemUtils"
 import usePathState from "../hooks/usePathState"
 import usePathsState from "../hooks/usePathsState"
 
@@ -24,7 +24,7 @@ const UIProvider: React.FC<Props> = ({ children }) => {
   const [, isDragging, setDragging, unsetDragging] = usePathState()
 
   // is active
-  const [active, isActive, setActive] = usePathState()
+  const [active, isActive, setActive, unsetActive] = usePathState()
 
   const { tree } = useContext(TreeyContext)
   const changeActive = (direction: Direction = "next") => {
@@ -61,6 +61,14 @@ const UIProvider: React.FC<Props> = ({ children }) => {
     }
   }
 
+  const clear = (path: Path) => {
+    const pathAdd = createPathAdd(path)
+    if (isShownForm(path) || isShownForm(pathAdd)) unsetShownForm()
+    if (isActive(path) || isShownForm(pathAdd)) unsetActive()
+    if (isDragging(path)) unsetDragging()
+    if (isOpen(path)) unsetOpen(path)
+  }
+
   const value = {
     isShownForm,
     setShownForm,
@@ -74,7 +82,8 @@ const UIProvider: React.FC<Props> = ({ children }) => {
     active,
     isActive,
     setActive,
-    changeActive
+    changeActive,
+    clear
   }
 
   return (
