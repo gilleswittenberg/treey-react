@@ -7,6 +7,7 @@ type ButtonType = "ADD" | "EDIT" | "DELETE"
 type Props = {
   type: ButtonType
   onClick?: () => void
+  onFocus?: () => void
 }
 
 const typeToImageMap = (type: ButtonType) : string => {
@@ -17,12 +18,12 @@ const typeToImageMap = (type: ButtonType) : string => {
   }
 }
 
-const Button: React.FC<Props> = ({ type, onClick }) => {
+const Button: React.FC<Props> = ({ type, onClick, onFocus }) => {
   const className = "Button " + type
   const backgroundImage = `url("${ process.env.PUBLIC_URL }/images/${ typeToImageMap(type) }")`
   const style = { backgroundImage }
   return (
-    <button className={ className } style={ style } onClick={ onClick } title={ type }>{ type }</button>
+    <button className={ className } style={ style } onClick={ onClick } onFocus={ onFocus } title={ type }>{ type }</button>
   )
 }
 

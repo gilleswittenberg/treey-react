@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useState, useRef, useEffect } from "react"
 import { useDrag, useDrop } from "react-dnd"
 import { Link } from "@reach/router"
 import cs from "classnames"
@@ -27,7 +27,7 @@ const ItemBody: React.FC<Props> = ({ path, parent, index, item, isOver, onClick,
 
   const id = getId(item)
   const dropId = id
-  const { isDragging: isDraggingGlobal, setDragging, unsetDragging, setOpen, isActive: itemIsActive } = useContext(UIContext)
+  const { isDragging: isDraggingGlobal, setDragging, unsetDragging, setOpen, isActive: itemIsActive, setActive } = useContext(UIContext)
   const { treey } = useContext(TreeyContext)
   const isDraggingUIContext = isDraggingGlobal()
   const isActive = itemIsActive(path)
@@ -78,6 +78,17 @@ const ItemBody: React.FC<Props> = ({ path, parent, index, item, isOver, onClick,
   const showDrop = (isOver && !hasRelations) || isOverDeep
   const showDnDPlaceHolderChild = isOverDeep
 
+  const spanElement = useRef<HTMLElement>(null)
+  useEffect(() => {
+    if (spanElement.current == null) return
+    if (isActive === false) return
+    spanElement.current.focus()
+  }, [isActive, spanElement])
+
+  const onFocus = () => {
+    setActive(path)
+  }
+
   return (
     <div className={ cs("ItemBodyWrap", { isActive, isDisabled }) }>
       <div
@@ -86,7 +97,13 @@ const ItemBody: React.FC<Props> = ({ path, parent, index, item, isOver, onClick,
         onMouseEnter={ onMouseEnter }
         onMouseLeave={ onMouseLeave }
         >
-        <span onClick={ onClick } onDoubleClick={ onDoubleClick }>
+        <span
+          ref={ spanElement }
+          onClick={ onClick }
+          onDoubleClick={ onDoubleClick }
+          tabIndex={ 0 }
+          onFocus={ onFocus }
+          >
           <ItemData data={ dataString } />
           <Link to={ linkTo } className="info">ⓘ</Link>
         </span>

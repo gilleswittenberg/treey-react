@@ -29,6 +29,10 @@ const FormAdd: React.FC<Props> = ({ path: parentPath, parent, isDisabled }) => {
     setActive(path)
   }
 
+  const onFocus = () => {
+    setActive(path)
+  }
+
   const submit = async (value: string) => {
     unsetShownForm()
     setOpen(parentPath)
@@ -40,9 +44,12 @@ const FormAdd: React.FC<Props> = ({ path: parentPath, parent, isDisabled }) => {
   }
 
   return (
-    <div className={ cs("FormAdd", { isDisabled, isActive }) } onClick={ event => event.stopPropagation() }>
+    <div
+      className={ cs("FormAdd", { isDisabled, isActive }) }
+      onClick={ event => event.stopPropagation() }
+      >
       { show &&
-        <Button onClick={ onClick } type="ADD" />
+        <Button onClick={ onClick } onFocus={ onFocus } type="ADD" />
       }
       { showForm &&
         <ItemForm submit={ submit } />
