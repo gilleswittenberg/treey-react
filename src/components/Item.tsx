@@ -63,7 +63,7 @@ const Item: React.FC<Props> = ({ path: parentPath, parent, index, item }) => {
 
   const onClick = () => {
     setActive(path)
-    if (isShownForm(pathAdd)) unsetShownForm()
+    if (isShownForm(path) === false) unsetShownForm()
     const selection = window.getSelection()
     if (selection && selection.toString() !== "") return
     if (!hasRelations) return
