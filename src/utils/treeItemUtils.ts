@@ -29,6 +29,9 @@ export const parsePath = (path: Path) : Ids => {
 export const isPathAdd = (path: Path) : boolean => {
   return path.slice(-4) === "/add"
 }
+export const getPathFromPathAdd = (path: Path) : Path => {
+  return isPathAdd(path) ? path.slice(0, -4) : path
+}
 export const getItemFromPath = (tree: TreeItem, path: Path) : TreeItem | undefined => {
   const compareIds = (id: Id | undefined, id1: Id | undefined) => {
     if (id === undefined || id1 === undefined) return false

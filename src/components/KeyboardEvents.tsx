@@ -3,7 +3,7 @@ import UIContext from "../contexts/UIContext"
 import TreeyContext from "../contexts/TreeyContext"
 import { parsePath } from "../utils/treeItemUtils"
 import last from "../utils/last"
-import { createPathAdd, isPathAdd, getItemFromPath } from "../utils/treeItemUtils"
+import { createPathAdd, isPathAdd, getItemFromPath, getPathFromPathAdd } from "../utils/treeItemUtils"
 
 const KeyboardEvents: React.FC = () => {
 
@@ -70,6 +70,8 @@ const KeyboardEvents: React.FC = () => {
         // esc
         case 27:
           unsetShownForm()
+          if (active === undefined) return
+          if (isPathAdd(active)) setActive(getPathFromPathAdd(active))
           break
         // +
         case 187:
