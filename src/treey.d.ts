@@ -49,3 +49,10 @@ declare type DraggableData = {
 }
 
 declare type Direction = "next" | "prev"
+
+declare type AlertType = "message" | "warning" | "error"
+declare type Alert = {
+  message: string,
+  type?: AlertType
+}
+declare type Alerts = Alert[]

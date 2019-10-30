@@ -1,4 +1,5 @@
 import React from "react"
+import AlertsProvider from "./components/AlertsProvider"
 import TreeyProvider from "./components/TreeyProvider"
 import UIProvider from "./components/UIProvider"
 import { Router } from "@reach/router"
@@ -15,15 +16,17 @@ const App: React.FC = () => {
     <div className="App">
       <Header/>
       <main>
-        <TreeyProvider>
-          <UIProvider>
-            <Router basepath={ basepath }>
-              <PageHome path="/" />
-              <PageItem path="/item/:fullName" />
-              <Page404 default />
-            </Router>
-          </UIProvider>
-        </TreeyProvider>
+        <AlertsProvider>
+          <TreeyProvider>
+            <UIProvider>
+              <Router basepath={ basepath }>
+                <PageHome path="/" />
+                <PageItem path="/item/:fullName" />
+                <Page404 default />
+              </Router>
+            </UIProvider>
+          </TreeyProvider>
+        </AlertsProvider>
       </main>
     </div>
   )

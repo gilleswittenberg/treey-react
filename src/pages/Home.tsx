@@ -2,6 +2,7 @@ import React, { useContext } from "react"
 import { RouteComponentProps } from "@reach/router"
 import TreeyContext from "../contexts/TreeyContext"
 import Spinner from "../components/Spinner"
+import Alerts from "../components/Alerts"
 import Tree from "../components/Tree"
 
 import "../styles/Home.sass"
@@ -23,6 +24,7 @@ const PageHome: React.FC<Props> = () => {
       { showTree &&
         <>
           <h1 className="RootItem">{ name }</h1>
+          <Alerts />
           <Tree tree={ tree! } treey={ treey! } />
         </>
       }
