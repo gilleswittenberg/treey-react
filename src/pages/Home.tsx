@@ -12,9 +12,9 @@ type Props = RouteComponentProps
 const PageHome: React.FC<Props> = () => {
 
   const { tree, treey } = useContext(TreeyContext)
-  const showSpinner = tree == null
-  const showTree = tree != null && treey != null
-  const name = tree != null ? tree.name : ""
+  const showSpinner = tree === undefined
+  const showTree = tree !== undefined && treey !== undefined
+  const name = tree?.name ?? ""
 
   return (
     <div className="Page PageHome">

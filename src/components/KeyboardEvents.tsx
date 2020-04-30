@@ -84,7 +84,7 @@ const KeyboardEvents: React.FC = () => {
           break
         // backspace
         case 8:
-          if (treey === null) return
+          if (treey === undefined) return
           if (active === undefined) return
           const ids = parsePath(active)
           const id = last(ids)

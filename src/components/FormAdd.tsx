@@ -38,7 +38,7 @@ const FormAdd: React.FC<Props> = ({ path: parentPath, parent, isDisabled }) => {
     setOpen(parentPath)
     const trimmedValue = value.trim()
     if (trimmedValue === "") return
-    if (treey === null) return
+    if (treey === undefined) return
     const data = parseData(trimmedValue)
     await treey.createAndAdd(data, parent)
   }

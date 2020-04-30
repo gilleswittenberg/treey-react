@@ -1,13 +1,13 @@
 import { createContext } from "react"
 
 type Value = {
-  tree: TreeItem | null
-  treey: Treey | null
+  tree?: TreeItem
+  treey?: Treey
 }
 
 const value = {
-  tree: null,
-  treey: null
+  tree: undefined,
+  treey: undefined
 } as Value
 
 const TreeyContext = createContext(value)

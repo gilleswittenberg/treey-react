@@ -31,7 +31,7 @@ const useTreey = () => {
       setTree(tree)
     }
   }
-  return [tree, actions]
+  return [tree, actions] as const
 }
 
 export default useTreey

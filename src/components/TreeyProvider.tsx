@@ -13,9 +13,8 @@ const createMessage = (...strs: string[]) => strs.join(" ")
 
 const TreeyProvider: React.FC<Props> = ({ children }) => {
 
-  const [tree, treey] = useTreey()
+  const [tree, { read, createAndAdd, update, remove, move }] = useTreey()
   const { show } = useContext(AlertsContext)
-  const { read, createAndAdd, update, remove, move } = treey
 
   const actions: Treey = {
     read,
