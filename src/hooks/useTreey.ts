@@ -9,11 +9,12 @@ const useTreey = () => {
 
     let isUnmounted = false
 
-    ;(async () => {
+    const initialize = async () => {
       const tree = await init()
       if (isUnmounted) return
       setTree(tree)
-    })()
+    }
+    initialize()
 
     return () => {
       isUnmounted = true
