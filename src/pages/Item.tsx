@@ -1,4 +1,4 @@
-import React from "react"
+import React, { FC } from "react"
 import { RouteComponentProps } from "@reach/router"
 import ItemOverview from "../components/ItemOverview"
 
@@ -6,7 +6,7 @@ type Props = RouteComponentProps & {
   fullName?: string
 }
 
-const PageItem: React.SFC<Props> = ({ fullName }) => {
+const PageItem: FC<Props> = ({ fullName }) => {
   return (
     <div className="Page PageItem">
       <ItemOverview fullName={ fullName || "" } />

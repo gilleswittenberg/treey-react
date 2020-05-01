@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { FC, useContext } from "react"
 import { RouteComponentProps } from "@reach/router"
 import TreeyContext from "../contexts/TreeyContext"
 import Spinner from "../components/Spinner"
@@ -9,7 +9,7 @@ import "../styles/Home.sass"
 
 type Props = RouteComponentProps
 
-const PageHome: React.FC<Props> = () => {
+const PageHome: FC<Props> = () => {
 
   const { tree, treey } = useContext(TreeyContext)
   const showSpinner = tree === undefined
