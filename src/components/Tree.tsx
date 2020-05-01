@@ -16,28 +16,26 @@ type Props = {
 
 const Tree: React.FC<Props> = ({ tree, treey }) => {
 
-  // @TODO: Why can tree be undefined?
-  const hasTree = tree !== undefined
-  const items = hasTree ? tree.relations : undefined
-  const id = hasTree ? getId(tree)! : undefined
-  const parent = id
-  const path = hasTree ? createFullName(id!) : undefined
+  const items = tree.relations
+  const id = getId(tree)
+  const showTree = id !== undefined
+  const parent = id!
+  const path = createFullName(id!)
 
-  // set first item active
+  // set first item active on initialisation
   const { isActive, changeActive } = useContext(UIContext)
   useEffect(() => {
-    if (hasTree && isActive() === false) changeActive()
-  }, [hasTree, isActive, changeActive])
-
+    if (isActive() === false) changeActive()
+  }, [isActive, changeActive])
 
   return (
     <div className="Tree">
-      { hasTree &&
+      { showTree &&
         <>
           <KeyboardEvents />
           <MouseEvents />
           <DndProvider backend={ HTML5Backend }>
-            <Items path={ path! } parent={ parent! } items={ items! } />
+            <Items path={ path } parent={ parent } items={ items } />
           </DndProvider>
         </>
       }

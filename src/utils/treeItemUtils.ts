@@ -4,8 +4,8 @@ const { utils: { createFullName, parseFullName } } = treey
 export { createFullName }
 export { parseFullName }
 
-export const getId = (item: TreeItem) : Id | undefined => item.state.ids && item.state.ids[0]
-export const getData = (item: TreeItem) : Data => item.state && item.state.data
+export const getId = (item: TreeItem) : Id | undefined => item.state.ids?.[0]
+export const getData = (item: TreeItem) : Data => item.state?.data
 
 export const stringifyData = (data: Data) : string => {
   if (typeof data === "string") return data
