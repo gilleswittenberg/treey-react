@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
 import Items from "./Items"
 import { DndProvider } from "react-dnd"
 import HTML5Backend from "react-dnd-html5-backend"
@@ -25,7 +25,10 @@ const Tree: React.FC<Props> = ({ tree, treey }) => {
 
   // set first item active
   const { isActive, changeActive } = useContext(UIContext)
-  if (hasTree && isActive() === false) changeActive()
+  useEffect(() => {
+    if (hasTree && isActive() === false) changeActive()
+  }, [hasTree, isActive, changeActive])
+
 
   return (
     <div className="Tree">

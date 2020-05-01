@@ -29,7 +29,7 @@ const UIProvider: React.FC<Props> = ({ children }) => {
   const { tree } = useContext(TreeyContext)
   const changeActive = (direction: Direction = "next") => {
 
-    if (tree == null) return
+    if (tree === undefined) return
 
     const treeWithAdd = appendAddToSiblings([tree])
     const rootPath = createFullName(getId(tree)!)
