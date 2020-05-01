@@ -4,12 +4,22 @@ const { treey: { init, read, createAndAdd, update, remove, move } } = treey
 
 const useTreey = () => {
   const [tree, setTree] = useState()
+
   useEffect(() => {
-    (async () => {
+
+    let isUnmounted = false
+
+    ;(async () => {
       const tree = await init()
+      if (isUnmounted) return
       setTree(tree)
     })()
+
+    return () => {
+      isUnmounted = true
+    }
   }, [])
+
   const actions: Treey = {
     read: async (id: Id) => {
       return await read(id)
