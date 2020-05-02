@@ -5,7 +5,8 @@ import HTML5Backend from "react-dnd-html5-backend"
 import UIContext from "../contexts/UIContext"
 import KeyboardEvents from "../components/KeyboardEvents"
 import MouseEvents from "../components/MouseEvents"
-import { getId, createFullName } from "../utils/treeItemUtils"
+import { getId } from "../utils/treeItemUtils"
+import { createFullName, Treey, TreeItem } from "treey"
 
 import "../styles/Tree.sass"
 

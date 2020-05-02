@@ -1,4 +1,5 @@
-import { getId, createFullName, createPathAdd } from "../treeItemUtils"
+import { getId, createPathAdd } from "../treeItemUtils"
+import { createFullName, TreeItem, TreeItems } from "treey"
 
 const appendAddToSiblings = (tree: TreeItems, parentPath?: Path) : TreeItems => {
   const newTree: TreeItems = []
@@ -6,7 +7,7 @@ const appendAddToSiblings = (tree: TreeItems, parentPath?: Path) : TreeItems => 
     const basePath = parentPath ? `${ parentPath }/${ index }/` : ""
     const path = `${ basePath }${ createFullName(getId(treeItem)!) }`
     const relations = appendAddToSiblings(treeItem.relations, path)
-    const treeItemAdd: TreeItem = {
+    const treeItemAdd: TreeItem & TreeNode = {
       state: {},
       events: [],
       relations: [],

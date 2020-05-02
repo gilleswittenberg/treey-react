@@ -3,6 +3,7 @@ import { useDrop } from 'react-dnd'
 import TreeyContext from "../contexts/TreeyContext"
 import ItemBody from "./ItemBody"
 import cs from "classnames"
+import { Id, Index, TreeItem } from "treey"
 
 import "../styles/ItemDnD.sass"
 

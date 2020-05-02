@@ -2,7 +2,7 @@ import React, { ReactNode, useContext } from "react"
 import AlertsContext from '../contexts/AlertsContext'
 import TreeyContext from '../contexts/TreeyContext'
 import useTreey from "../hooks/useTreey"
-import { createFullName } from "../utils/treeItemUtils"
+import { createFullName, Id, Index, Data } from "treey"
 
 type Props = {
   children: ReactNode
@@ -13,10 +13,10 @@ const createMessage = (...strs: string[]) => strs.join(" ")
 
 const TreeyProvider: React.FC<Props> = ({ children }) => {
 
-  const [tree, { read, createAndAdd, update, remove, move }] = useTreey()
+  const [tree, { read, createAndAdd, update, remove, move, init, clone }] = useTreey()
   const { show } = useContext(AlertsContext)
 
-  const actions: Treey = {
+  const actions = {
     read,
     createAndAdd: async (data: Data, parentId: Id) => {
       await createAndAdd(data, parentId)
@@ -33,7 +33,9 @@ const TreeyProvider: React.FC<Props> = ({ children }) => {
     move: async (id: Id, oldParentId: Id, parentId: Id, oldIndex?: Index, index?: Index) => {
       await move(id, oldParentId, parentId, oldIndex, index)
       show(createMessage("move", abbr(id), abbr(oldParentId), abbr(parentId)))
-    }
+    },
+    init,
+    clone
   }
 
   const value = { tree, treey: actions }

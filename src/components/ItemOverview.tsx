@@ -1,10 +1,8 @@
 import React, { useState, useContext, useEffect } from "react"
 import TreeyContext from "../contexts/TreeyContext"
-import treey from "treey"
+import { parseFullName, TreeItem } from "treey"
 
 import "../styles/ItemOverview.sass"
-
-const { utils: { parseFullName } } = treey
 
 type Props = {
   fullName: string

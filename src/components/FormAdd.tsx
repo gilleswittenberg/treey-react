@@ -5,6 +5,7 @@ import ItemForm from "./ItemForm"
 import Button from "./Button"
 import { parseData, createPathAdd } from "../utils/treeItemUtils"
 import cs from "classnames"
+import { Id } from "treey"
 
 import "../styles/FormAdd.sass"
 

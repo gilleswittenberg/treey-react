@@ -7,6 +7,7 @@ import Items from "./Items"
 import cs from "classnames"
 import { isEqual } from "lodash"
 import { getId, getData, stringifyData, parseData, createPathAdd } from "../utils/treeItemUtils"
+import { Id, Index, TreeItem } from "treey"
 
 import "../styles/Item.sass"
 

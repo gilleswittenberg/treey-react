@@ -1,6 +1,8 @@
+import { TreeItem, TreeItems } from "treey"
+
 const pruneTree = (tree: TreeItems, isOpen: Paths) : TreeItems => {
   const prunedTree: TreeItems = []
-  tree.forEach(treeItem => {
+  tree.forEach((treeItem: TreeItem & TreeNode)  => {
     const treeItemIsOpen = isOpen.includes(treeItem.path!)
     const hasRelations = treeItem.relations.length > 1
     const shouldPrune = treeItemIsOpen && hasRelations

@@ -21,7 +21,7 @@
     "react-dnd-html5-backend": "^10.0.2",
     "react-dom": "^16.13.1",
     "react-scripts": "^3.4.1",
-    "treey": "^0.0.7",
+    "treey": "0.0.12",
     "typescript": "^3.8.3"
   },
   "scripts": {

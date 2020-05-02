@@ -9,6 +9,7 @@ import Button from "./Button"
 import basepath from "../utils/basepath"
 import { getId, getData, stringifyData } from "../utils/treeItemUtils"
 import defer from "../utils/defer"
+import { Id, Index, TreeItem } from "treey"
 
 type Props = {
   path: Path

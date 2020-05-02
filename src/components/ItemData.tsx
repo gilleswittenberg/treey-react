@@ -1,4 +1,5 @@
 import React from "react"
+import { Data } from "treey"
 
 type Props = {
   data: Data

@@ -4,7 +4,8 @@ import TreeyContext from '../contexts/TreeyContext'
 import pruneTree from "../utils/tree/pruneTree"
 import flattenTree from "../utils/tree/flattenTree"
 import appendAddToSiblings from "../utils/tree/appendAddToSiblings"
-import { getId, createFullName, createPathAdd } from "../utils/treeItemUtils"
+import { getId, createPathAdd } from "../utils/treeItemUtils"
+import { createFullName } from "treey"
 import usePathState from "../hooks/usePathState"
 import usePathsState from "../hooks/usePathsState"
 
@@ -38,7 +39,7 @@ const UIProvider: React.FC<Props> = ({ children }) => {
     const prunedTree = pruneTree(treeWithAdd, arr)
     const flattenedArr = flattenTree(prunedTree)
     // remove root item
-    const items = flattenedArr.slice(1)
+    const items = flattenedArr.slice(1) as TreeNodes
 
     const setFirstItemActive = () => {
       const path = items[0].path!

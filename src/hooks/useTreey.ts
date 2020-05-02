@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
-import treey from "treey"
-const { treey: { init, read, createAndAdd, update, remove, move } } = treey
+import treey, { Treey, Id, Index, Data } from "treey"
+const { init, read, createAndAdd, update, remove, move, clone } = treey
 
 const useTreey = () => {
   const [tree, setTree] = useState()
@@ -22,6 +22,7 @@ const useTreey = () => {
   }, [])
 
   const actions: Treey = {
+    init,
     read: async (id: Id) => {
       return await read(id)
     },
@@ -40,7 +41,8 @@ const useTreey = () => {
     move: async (id: Id, oldParentId: Id, parentId: Id, oldIndex?: Index, index?: Index) => {
       const tree = await move(id, oldParentId, parentId, oldIndex, index)
       setTree(tree)
-    }
+    },
+    clone
   }
   return [tree, actions] as const
 }
